@@ -74,7 +74,7 @@ exports.signin = async function(req, res, next){
         
         return next({
             status: 400,
-            message: err.message
+            message: "Incorrect email or password."
         })
     }
 }
