@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 mongoose.set("debug", true);
 mongoose.Promise = Promise;
 // connect database
-mongoose.connect("mongodb://localhost:27017/csit214", {
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost:27017/csit214", {
     keepAlive: true,
 })
 
