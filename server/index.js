@@ -18,10 +18,6 @@ app.use(bodyParser.urlencoded({extended: true}))
 
 
 // routes
-app.get('/', (req, res) => {
-    res.send({hello: 'there!'});
-})
-
 app.use("/api/auth", authRoutes);
 app.use("/api/staff", 
     loginRequired, 
