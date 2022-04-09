@@ -34,13 +34,13 @@ app.use("/api/common",
     commonRoutes
 );
 
-app.use((req, res, next) => {
-    let err = new Error("Page Not Found");
-    err.status = 404;
-    next(err);
-});
+// app.use((req, res, next) => {
+//     let err = new Error("Page Not Found");
+//     err.status = 404;
+//     next(err);
+// });
 
-app.use(errorHandler);
+// app.use(errorHandler);
 
 if (process.env.NODE_ENV === "production") {
     const path = require("path");
