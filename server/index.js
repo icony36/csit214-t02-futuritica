@@ -34,14 +34,6 @@ app.use("/api/common",
     commonRoutes
 );
 
-// app.use((req, res, next) => {
-//     let err = new Error("Page Not Found");
-//     err.status = 404;
-//     next(err);
-// });
-
-// app.use(errorHandler);
-
 if (process.env.NODE_ENV === "production") {
     const path = require("path");
    
@@ -52,8 +44,15 @@ if (process.env.NODE_ENV === "production") {
     app.get("*", (req, res) => {
       res.sendFile(path.resolve(__dirname, "../client/build", "index.html"));
     });
-  }
+}
 
+app.use((req, res, next) => {
+    let err = new Error("Page Not Found");
+    err.status = 404;
+    next(err);
+});
+
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
