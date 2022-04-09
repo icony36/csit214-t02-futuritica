@@ -33,7 +33,7 @@ exports.createRoom = async function(req, res, next){
     
     if (!availability || !timestamp || !capacity ) {
         return res
-            .status(422)
+            .status(400)
             .send({ error: "Please provide required info." });
     }
 
@@ -108,7 +108,7 @@ exports.bookRoom = async function(req, res, next){
                 }
                 else {
                     return next({
-                        status: 400,
+                        status: 422,
                         message: "This room is already booked."
                     });
                 }        
@@ -125,13 +125,13 @@ exports.bookRoom = async function(req, res, next){
                 }
                 else {
                     return next({
-                        status: 400,
+                        status: 422,
                         message: "This room is not yet booked."
                     });
                 }
             default:
                 return next({
-                    status: 400,
+                    status: 401,
                     message: "Unauthorized role."
                 });      
         }                         
