@@ -39,7 +39,7 @@ app.use("/api/common",
 );
 
 app.use((req, res, next) => {
-    let err = new Error("Page Not Found!");
+    let err = new Error("Page Not Found");
     err.status = 404;
     next(err);
 });
