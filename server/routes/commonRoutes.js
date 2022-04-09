@@ -6,6 +6,6 @@ const { ensureCorrectUser} = require("../middleware/auth");
 
 router.route("/rooms").get(getRooms);
 router.route("/rooms/:id").get(getRoom);
-router.route("/:id").get(ensureCorrectUser,getUser);
+router.route("/user/:id").get(ensureCorrectUser,getUser);
 
 module.exports = router;

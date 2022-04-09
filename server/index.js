@@ -1,6 +1,5 @@
 require("dotenv").config();
 const express = require('express');
-const app = express();
 const cors = require("cors");
 const bodyParser = require("body-parser");
 
@@ -8,8 +7,10 @@ const errorHandler = require("./handlers/error");
 const authRoutes = require("./routes/authRoutes");
 const staffRoutes = require("./routes/staffRoutes");
 const studentRoutes = require("./routes/studentRoutes");
-const userRoutes = require("./routes/userRoutes");
+const commonRoutes = require("./routes/commonRoutes");
 const {loginRequired, ensureCorrectRole} = require("./middleware/auth");
+
+const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -32,9 +33,9 @@ app.use("/api/student",
     ensureCorrectRole("student"),
     studentRoutes
 );
-app.use("/api/user", 
-    loginRequired,
-    userRoutes
+app.use("/api/common", 
+    // loginRequired,
+    commonRoutes
 );
 
 app.use((req, res, next) => {

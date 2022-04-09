@@ -7,6 +7,4 @@ router.route("/room").post(createRoom);
 router.route("/room/:id").put(updateRoom);
 router.route("/room/:id").delete(deleteRoom);
 
-
-
 module.exports = router;
