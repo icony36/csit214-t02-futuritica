@@ -8,12 +8,14 @@ import AuthPage from "./AuthPage";
 import * as actions from "../store/actions";
 
 const App = props => {
-    const {  auth, errors, authUser, removeError } = props;
+    const {  auth, errors, authUser, removeError, logout } = props;
+
+    console.log(logout)
 
     return(
         <BrowserRouter>
             <div>
-                <Navbar />                    
+                <Navbar auth={auth} logout={logout} />                    
                 <div className="container">
                     <Switch>
                         <Route exact path="/" render={props=> <HomePage auth={auth} {...props} />} />

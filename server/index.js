@@ -30,7 +30,7 @@ app.use("/api/student",
     studentRoutes
 );
 app.use("/api/common", 
-    // loginRequired,
+    loginRequired,
     commonRoutes
 );
 
