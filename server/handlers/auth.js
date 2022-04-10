@@ -3,9 +3,11 @@ const jwt = require("jsonwebtoken");
 
 exports.signup = async function(req, res, next){
     if (!req.body.email || !req.body.password || !req.body.username || !req.body.role) {
-        return res
-            .status(422)
-            .send({ error: "Please provide required info." });
+
+        return next({
+            status: 422,
+            message: "Please provide required info."
+        })
     }    
     
     try{
@@ -39,9 +41,10 @@ exports.signup = async function(req, res, next){
 exports.signin = async function(req, res, next){
     
     if (!req.body.email || !req.body.password) {
-        return res
-            .status(422)
-            .send({ error: "Please provide email and password." });
+        return next({
+            status: 422,
+            message: "Please provide email and password."
+        })
     }
 
     try{
@@ -57,11 +60,13 @@ exports.signin = async function(req, res, next){
             const token = jwt.sign({id, email, role}, process.env.SECRET_KEY);
 
             return res.status(200).json({
-                id,
-                email,
-                username,
-                role,
-                token
+               user:{
+                    id,
+                    email,
+                    username,
+                    role,
+               },
+               token
             });
         }
         else {

@@ -32,9 +32,11 @@ exports.createRoom = async function(req, res, next){
     const {availability, timestamp, capacity, price, promotionCode} = req.body;
     
     if (!availability || !timestamp || !capacity ) {
-        return res
-            .status(400)
-            .send({ error: "Please provide required info." });
+
+        return next({
+            status: 400,
+            message: "Please provide required info."
+        });
     }
 
     try{
@@ -79,9 +81,11 @@ exports.bookRoom = async function(req, res, next){
     const {bookedBy, availability} = req.body;
 
     if (!bookedBy || !availability ) {
-        return res
-            .status(422)
-            .send({ error: "Invalid booking." });
+
+        return next({
+            status: 422,
+            message: "Invalid booking."
+        });
     }
 
     try{
@@ -89,9 +93,11 @@ exports.bookRoom = async function(req, res, next){
         const user = await db.User.findById(bookedBy);
 
         if (room.availability == "private" ) {
-            return res
-                .status(422)
-                .send({ error: "This room is not launched yet." });
+
+            return next({
+                status: 422,
+                message: "This room is not launched yet."
+            });
         }
 
         switch(availability){

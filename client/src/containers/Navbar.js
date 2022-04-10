@@ -26,7 +26,7 @@ class Navbar extends Component {
 
 function mapStateToProps(state) {
     return{
-        currentUser: state.currentUser
+        auth: state.auth
     };
 }
 
