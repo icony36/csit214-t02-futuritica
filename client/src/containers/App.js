@@ -3,12 +3,12 @@ import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom';
 import { connect } from "react-redux";
 
 import Navbar from './Navbar';
-import Landing from "../components/Landing";
-import AuthForm from "../components/AuthForm";
+import HomePage from "./HomePage";
+import AuthPage from "./AuthPage";
 import * as actions from "../store/actions";
 
 const App = props => {
-    const { authUser, errors, removeError } = props;
+    const {  auth, errors, authUser, removeError } = props;
 
     return(
         <BrowserRouter>
@@ -16,15 +16,15 @@ const App = props => {
                 <Navbar />                    
                 <div className="container">
                     <Switch>
-                        <Route exact path="/" render={props=> <Landing {...props} />} />
+                        <Route exact path="/" render={props=> <HomePage auth={auth} {...props} />} />
                         <Route exact path="/signin"  render={props=> {
                             return(
-                                <AuthForm onAuth={authUser} errors={errors} removeError={removeError} buttonText="Sign In" heading="Sign In" {...props}/>
+                                <AuthPage onAuth={authUser} errors={errors} removeError={removeError} buttonText="Sign In" heading="Sign In" {...props}/>
                             )
                         }} />
                         <Route exact path="/signup" render={props=> {
                             return(
-                                <AuthForm onAuth={authUser} errors={errors} removeError={removeError} signUp buttonText="Sign Up" heading="Sign Up" {...props}/>
+                                <AuthPage onAuth={authUser} errors={errors} removeError={removeError} signUp buttonText="Sign Up" heading="Sign Up" {...props}/>
                             )
                         }} />
                     </Switch>

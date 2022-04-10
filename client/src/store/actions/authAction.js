@@ -9,16 +9,17 @@ export function setCurrentUser(user){
     };
 }
 
-export const authUser = (type, userData) => async dispatch => {
+export const authUser = (type, userData, history) => async dispatch => {
    try{
         const res = await apiCall("post", `/api/auth/${type}`, userData);
 
         localStorage.setItem("jwtToken", res.token);
         dispatch(setCurrentUser(res.user));
         dispatch(removeError());
+
+        history.push('/');
    } catch(err){
         dispatch(addError(err));
-        console.log(err);
    }
 }
     
