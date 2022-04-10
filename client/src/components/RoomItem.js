@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Moment from 'react-moment';
+// import Moment from 'react-moment';
 
 const MessageItem = props => {
     const { id, availability, timestamp, capacity, price, bookedBy } = props;
@@ -9,9 +9,9 @@ const MessageItem = props => {
     return(
         <li className='list-group-item'>
             <span className='text-muted'>
-                <Moment className='text-muted' format="DD MM YYYY">
+                {/* <Moment className='text-muted' format="DD MM YYYY">
                     {timestamp}
-                </Moment>
+                </Moment> */}
             </span>
             <span>
                 Availability: {availability}
