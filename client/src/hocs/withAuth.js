@@ -7,7 +7,7 @@ const withAuth = (Component, allowedRole) => {
             if(!props.auth.isAuthenticated){
                 props.history.push("/signin");
             }
-            else if( allowedRole && allowedRole != props.auth.user.role){
+            else if( allowedRole && allowedRole !== props.auth.user.role){
                 props.history.push("/");
             }
         }, []);
