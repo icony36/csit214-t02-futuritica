@@ -57,3 +57,13 @@ ul.nav.navbar-nav li a:hover{
     background-size: cover;
 }
 
+/* RoomList */
+#room-list .list-group-item {
+    display: flex;
+    align-items: flex-start;
+}
+
+#room-list:not(.no-hover) .list-group-item:hover {
+    background-color: #caf0f8;
+}
+

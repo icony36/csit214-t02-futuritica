@@ -1,15 +1,16 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import {Link} from 'react-router-dom';
 
-const HomePage = props => {
-    const { auth } = props;
+import RoomList from './RoomList';
+
+const HomePage = () => {
+    const auth  = useSelector(state => state.auth);
     
     if(auth.isAuthenticated){
         return(
             <div>
-                <h1>
-                    Welcome back!
-                </h1>
+               <RoomList />
             </div>
         )
     }

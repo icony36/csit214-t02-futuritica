@@ -12,7 +12,7 @@ const SignUpForm = props => {
                 </div>
             }
             
-            <label htmlFor='email'>Email:</label>
+            <label htmlFor='email'>Email (required):</label>
             <input 
                 className='form-control' 
                 id='email' 
@@ -21,7 +21,7 @@ const SignUpForm = props => {
                 value={email} 
                 type="text" 
             />
-            <label htmlFor='password'>Password:</label>
+            <label htmlFor='password'>Password (required):</label>
             <input 
                 className='form-control' 
                 id='password' 
@@ -29,7 +29,7 @@ const SignUpForm = props => {
                 onChange={handleChange} 
                 type="password" 
             />
-            <label htmlFor='username'>Username:</label>
+            <label htmlFor='username'>Username (required):</label>
             <input 
                 className='form-control' 
                 id='username' 
@@ -38,15 +38,22 @@ const SignUpForm = props => {
                 value={username} 
                 type="text" 
             />
-            <label htmlFor='role'>Role:</label>
-            <input 
+            <label htmlFor='role'>Role (required):</label>
+            <select 
                 className='form-control' 
                 id='role' 
                 name='role' 
                 onChange={handleChange} 
                 value={role}
-                type="text" 
-            />
+            >
+                <option value="" disabled hidden>Choose...</option>
+                <option value="student">
+                    Student
+                </option>
+                <option value="staff">
+                    Staff
+                </option>
+            </select>
         </>
     )
 }

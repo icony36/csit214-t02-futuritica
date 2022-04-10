@@ -9,9 +9,10 @@ export const loadRooms = rooms => ({
 
 export const fetchRooms = () => async dispatch => {
     try{
-        const res = await apiCall("get", `/api/rooms`);
+        const res = await apiCall("get", `/api/common/rooms`);
 
         dispatch(loadRooms(res));
+        dispatch(removeError());
    } catch(err){
         dispatch(addError(err));
    }

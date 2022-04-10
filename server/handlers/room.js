@@ -2,7 +2,7 @@ const db = require("../models");
 
 exports.getRooms = async function(req, res, next){
     try{
-        const rooms = await db.Room.find({});
+        const rooms = await db.Room.find({}).populate('bookedBy');
 
         return res.status(200).json(rooms);
     } catch(err){
@@ -17,7 +17,7 @@ exports.getRoom = async function(req, res, next){
     const id = req.params.id;
     
     try{
-        const room = await db.Room.findById(id);
+        const room = await db.Room.findById(id).populate('bookedBy');
 
         return res.status(200).json(room);
     } catch(err){

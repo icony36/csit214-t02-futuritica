@@ -1,43 +1,47 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { logout } from '../store/actions';
 
-class Navbar extends Component {
-    logout = e => {
+const Navbar = () => {
+    const auth = useSelector(state => state.auth);
+    
+    const dispatch = useDispatch();
+    
+    const handleLogout = e => {
         e.preventDefault();
-        this.props.logout();
+        dispatch(logout());
     }
       
-    render(){
-        return(
-            <nav className='navbar navbar-dark navbar-expand'>
-                <div className="container-fluid">
-                    <Link to="/" className='navbar-brand'>
-                        Futuristica
-                    </Link>
-                    {this.props.auth.isAuthenticated ? (
-                    <ul className='nav navbar-nav navbar-right'>    
-                        <li>
-                            <Link to="/">Profile</Link>
-                        </li>
-                        <li>
-                            <a style={{color: 'white'}} onClick={this.logout}>Log out</a>
-                        </li>
-                    </ul>       
-                    ) : (
-                    <ul className='nav navbar-nav navbar-right'>    
-                        <li>
-                            <Link to="/signup">Sign up</Link>
-                        </li>
-                        <li>
-                            <Link to="/signin">Sign in</Link>
-                        </li>
-                    </ul>
-                    )
-                    }
-                </div>
-            </nav>
-        )
-    }
+    return(
+        <nav className='navbar navbar-dark navbar-expand'>
+            <div className="container-fluid">
+                <Link to="/" className='navbar-brand'>
+                    Futuristica
+                </Link>
+                {auth.isAuthenticated ? (
+                <ul className='nav navbar-nav navbar-right'>    
+                    <li>
+                        <Link to="/profile">Profile</Link>
+                    </li>
+                    <li>
+                        <a style={{color: 'white'}} onClick={handleLogout}>Log out</a>
+                    </li>
+                </ul>       
+                ) : (
+                <ul className='nav navbar-nav navbar-right'>    
+                    <li>
+                        <Link to="/signup">Sign up</Link>
+                    </li>
+                    <li>
+                        <Link to="/signin">Sign in</Link>
+                    </li>
+                </ul>
+                )
+                }
+            </div>
+        </nav>
+    )
 }
 
 
