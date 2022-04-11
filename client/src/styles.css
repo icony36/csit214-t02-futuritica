@@ -67,3 +67,8 @@ ul.nav.navbar-nav li a:hover{
     background-color: #caf0f8;
 }
 
+/* RoomNew */
+.form-control .react-date-picker__wrapper {
+    border: none;
+}
+

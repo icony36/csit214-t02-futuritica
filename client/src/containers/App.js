@@ -6,6 +6,7 @@ import HomePage from "./HomePage";
 import AuthPage from "./AuthPage";
 import ProfilePage from './ProfilePage';
 import RoomNewPage from './RoomNewPage';
+import RoomPage from './RoomPage';
 import withAuth from "../hocs/withAuth";
 
 const App = () => {
@@ -29,6 +30,7 @@ const App = () => {
                         }} />
                         <Route exact path="/room/new" component={RoomNewPage}/>
                         <Route exact path="/profile" component={ProfilePage}/>
+                        <Route exact path="/room/:id" component={RoomPage}/>
                     </Switch>
                 </div>
             </div>

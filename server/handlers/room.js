@@ -50,6 +50,11 @@ exports.createRoom = async function(req, res, next){
 
         return res.status(200).json(room);
     } catch(err){
+        // if validation fail
+        if(err.code === 11000){
+            err.message = "Sorry, the timeslot is already used.";
+        }
+        
         return next({
             status: 400,
             message: err.message

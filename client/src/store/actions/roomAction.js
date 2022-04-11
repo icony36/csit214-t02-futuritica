@@ -1,5 +1,5 @@
 import { apiCall } from '../../services/api';
-import { LOAD_ROOMS, REMOVE_ROOM } from '../actionTypes';
+import { LOAD_ROOMS, LOAD_ROOM_DETAILS, REMOVE_ROOM } from '../actionTypes';
 import { addError, removeError } from './errorAction';
 
 export const loadRooms = rooms => ({
@@ -22,7 +22,7 @@ export const postNewRoom = room => async (dispatch) => {
     try{
         const res = await apiCall("post", `/api/staff/room/`, room);
 
-
+        dispatch(removeError());
     } catch(err){
         dispatch(addError(err));
     } 
