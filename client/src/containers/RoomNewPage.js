@@ -51,17 +51,17 @@ const RoomNewPage = ({history}) => {
         ))
     }
 
-    const handleMinutes = e => {
-        const date = roomData.timestamp;
-        date.setMinutes(e.target.value)
+    // const handleMinutes = e => {
+    //     const date = roomData.timestamp;
+    //     date.setMinutes(e.target.value)
 
-        setRoomData(prevState => (
-            {
-                ...prevState,
-                timestamp: date
-            }
-        ))
-    }
+    //     setRoomData(prevState => (
+    //         {
+    //             ...prevState,
+    //             timestamp: date
+    //         }
+    //     ))
+    // }
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -80,7 +80,7 @@ const RoomNewPage = ({history}) => {
 
     return(
         <div>
-            <h2>Create new room</h2>
+            <h2>Create a new room</h2>
             <form onSubmit={handleSubmit}>
                 {errors.message && 
                     <div className='alert alert-danger'>
@@ -198,14 +198,14 @@ const RoomNewPage = ({history}) => {
                     type="number" 
                 />
 
-                <label htmlFor='promotionCode'>PromotionCode (required):</label>
+                <label htmlFor='promotionCode'>PromotionCode:</label>
                 <input 
                     className='form-control' 
                     id='promotionCode' 
                     name='promotionCode' 
                     onChange={handleChange} 
                     value={roomData.promotionCode} 
-                    type="number" 
+                    type="text" 
                 />
 
                 <label htmlFor='availability'>Availability (required):</label>

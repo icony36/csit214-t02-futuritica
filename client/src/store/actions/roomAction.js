@@ -1,5 +1,5 @@
 import { apiCall } from '../../services/api';
-import { LOAD_ROOMS, LOAD_ROOM_DETAILS, REMOVE_ROOM } from '../actionTypes';
+import { LOAD_ROOMS, REMOVE_ROOM } from '../actionTypes';
 import { addError, removeError } from './errorAction';
 
 export const loadRooms = rooms => ({
@@ -11,8 +11,10 @@ export const fetchRooms = () => async dispatch => {
     try{
         const res = await apiCall("get", `/api/common/rooms`);
 
-        dispatch(loadRooms(res));
-        dispatch(removeError());
+        await dispatch(loadRooms(res));
+        await dispatch(removeError());
+
+        return res
    } catch(err){
         dispatch(addError(err));
    }
@@ -26,6 +28,15 @@ export const postNewRoom = room => async (dispatch) => {
     } catch(err){
         dispatch(addError(err));
     } 
+}
+
+export const updateRoom = (room, id) => async dispatch => {
+    try{
+        const res = await apiCall("put", `/api/staff/room/${id}`, room);
+
+    } catch(err){
+        dispatch(addError(err));
+    }  
 }
 
 
