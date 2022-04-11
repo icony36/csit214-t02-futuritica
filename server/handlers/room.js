@@ -34,7 +34,7 @@ exports.createRoom = async function(req, res, next){
     if (!availability || !timestamp || !capacity ) {
 
         return next({
-            status: 400,
+            status: 422,
             message: "Please provide required info."
         });
     }

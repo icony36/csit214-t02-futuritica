@@ -5,6 +5,7 @@ import Navbar from './Navbar';
 import HomePage from "./HomePage";
 import AuthPage from "./AuthPage";
 import ProfilePage from './ProfilePage';
+import RoomNewPage from './RoomNewPage';
 import withAuth from "../hocs/withAuth";
 
 const App = () => {
@@ -26,6 +27,7 @@ const App = () => {
                                 <AuthPage isSignUp buttonText="Sign Up" heading="Sign Up" {...props}/>
                             )
                         }} />
+                        <Route exact path="/room/new" component={RoomNewPage}/>
                         <Route exact path="/profile" component={ProfilePage}/>
                     </Switch>
                 </div>

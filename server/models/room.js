@@ -8,7 +8,7 @@ const roomSchema = new mongoose.Schema({
         default: 'private'
     },
     timestamp: {
-        type: Number,
+        type: Date,
         unique: true,
         required: true
     },

@@ -17,3 +17,15 @@ export const fetchRooms = () => async dispatch => {
         dispatch(addError(err));
    }
 }
+
+export const postNewRoom = room => async (dispatch) => {
+    try{
+        const res = await apiCall("post", `/api/staff/room/`, room);
+
+
+    } catch(err){
+        dispatch(addError(err));
+    } 
+}
+
+

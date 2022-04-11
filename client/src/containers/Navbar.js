@@ -22,6 +22,9 @@ const Navbar = () => {
                 {auth.isAuthenticated ? (
                 <ul className='nav navbar-nav navbar-right'>    
                     <li>
+                        <Link to="/room/new">Create room</Link>
+                    </li>
+                    <li>
                         <Link to="/profile">Profile</Link>
                     </li>
                     <li>

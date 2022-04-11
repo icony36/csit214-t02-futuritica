@@ -27,7 +27,6 @@ const AuthPage = ({heading, buttonText, isSignUp, history}) => {
 
     const handleSubmit = e => {
         e.preventDefault();
-        console.log(formData);
         const authType = isSignUp ? 'signup' : 'signin'; 
         dispatch(authUser(authType, formData, history));
     }

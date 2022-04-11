@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router({mergeParams: true});
-const {createRoom, getRooms, updateRoom, bookRoom, deleteRoom} = require("../handlers/room");
+const {createRoom, updateRoom, deleteRoom} = require("../handlers/room");
 
 
 router.route("/room").post(createRoom);
