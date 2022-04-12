@@ -1,9 +1,9 @@
-import React, { useEffect, useState, useLayoutEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { fetchRooms, updateRoom } from '../store/actions';
 
-const RoomEditForm = () => {
+const RoomEditPage = ({history}) => {
     const errors = useSelector(state=>state.errors);
     const rooms = useSelector(state => state.rooms);
     const { id } = useParams();
@@ -44,13 +44,13 @@ const RoomEditForm = () => {
     const handleSubmit = e => {
         e.preventDefault();
     
-        dispatch(updateRoom(roomEditData, id));
+        dispatch(updateRoom(roomEditData, id, history));
     }
     
     return(
-        <>
+        <div className='row justify-content-md-center text-center'>
             {currentRoom && 
-                <div>
+                <div className='col-md-4'>
                     <form onSubmit={handleSubmit}>
                         {errors.message && 
                             <div className='alert alert-danger'>
@@ -84,7 +84,8 @@ const RoomEditForm = () => {
                             name='price' 
                             onChange={handleChange} 
                             value={roomEditData.price} 
-                            type="number" 
+                            type="text" 
+                            onKeyPress={(e) => !/[0-9]/.test(e.key) && e.preventDefault()}
                         />
 
                         <label htmlFor='promotionCode'>PromotionCode:</label>
@@ -101,8 +102,8 @@ const RoomEditForm = () => {
                     </form>
                 </div>
             }
-        </>
+        </div>
     )
 }
 
-export default RoomEditForm;
+export default RoomEditPage;

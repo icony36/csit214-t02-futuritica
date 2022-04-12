@@ -9,6 +9,7 @@ import RoomNewPage from './RoomNewPage';
 import RoomEditPage from './RoomEditPage';
 import RoomPage from './RoomPage';
 import withAuth from "../hocs/withAuth";
+import { ROLE } from "../constants";
 
 const App = () => {
 
@@ -20,19 +21,19 @@ const App = () => {
                     <Switch>
                         <Route exact path="/" component={HomePage} />
                         <Route exact path="/signin"  render={props=> {
-                            return(
+                          return(
                                 <AuthPage buttonText="Sign In" heading="Sign In" {...props}/>
                             )
                         }} />
                         <Route exact path="/signup" render={props=> {
-                            return(
+                          return(
                                 <AuthPage isSignUp buttonText="Sign Up" heading="Sign Up" {...props}/>
                             )
                         }} />
-                        <Route exact path="/room/new" component={RoomNewPage}/>
-                        <Route exact path="/profile" component={ProfilePage}/>
-                        <Route exact path="/room/:id" component={RoomPage}/>
-                        <Route exact path="/room/:id/edit" component={RoomEditPage}/>
+                        <Route exact path="/profile" component={withAuth(ProfilePage)}/>
+                        <Route exact path="/room/new" component={withAuth(RoomNewPage, ROLE.staff)}/>
+                        <Route exact path="/room/:id" component={withAuth(RoomPage)}/>
+                        <Route exact path="/room/:id/edit" component={withAuth(RoomEditPage, ROLE.staff)}/>
                     </Switch>
                 </div>
             </div>

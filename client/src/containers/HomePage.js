@@ -18,8 +18,10 @@ const HomePage = () => {
     return(
         <div className='landing-hero'>
             <h1 style={{fontWeight: "bold"}}>Futuristica</h1>
-            <h4 className='subtitle'>Room Booking System</h4>
-            <Link to="/signup" className="btn btn-primary">Sign Up</Link>
+            <p className='subtitle'>A room booking system for CSIT214</p>
+            <div style={{marginTop: '2rem'}}>
+                <Link to="/signin" className="btn btn-primary">Sign In Here</Link>
+            </div>
         </div>
     )
 }

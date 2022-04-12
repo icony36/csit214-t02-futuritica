@@ -31,6 +31,7 @@ export const updateUser = user => async (dispatch, getState) => {
     try{
         const res = await apiCall("put", `/api/common/user/${id}`, user);
 
+        console.log(res);
     } catch(err){
         dispatch(addError(err));
     }  

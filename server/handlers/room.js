@@ -1,4 +1,19 @@
 const db = require("../models");
+const jwt = require("jsonwebtoken");
+
+const getUserIDFromToken = req => {  
+    const authHeader = req.headers.authorization || req.headers.Authorization;
+    const token = authHeader.split(" ")[1];
+    
+    const decoded = jwt.verify(token, process.env.SECRET_KEY); 
+
+    if(decoded){
+        return decoded.id;
+    }
+    else {
+        return null;
+    }
+}
 
 exports.getRooms = async function(req, res, next){
     try{
@@ -72,7 +87,47 @@ exports.updateRoom = async function(req, res, next){
         // update room details
         await db.Room.findByIdAndUpdate(id, {...req.body}, {useFindAndModify: false});
 
-        return res.status(200).json({message: `Room updated ${id}!`});
+        return res.status(200).json({message: `Room successfully updated.`});
+    } catch(err){
+        return next({
+            status: 400,
+            message: err.message
+        });
+    }
+};
+
+exports.launchRoom = async function(req, res, next){
+    const id = req.params.id;
+    const {availability} = req.body;
+
+    if (!availability ) {
+
+        return next({
+            status: 422,
+            message: "Invalid launch."
+        });
+    }
+
+    try{
+        const room = await db.Room.findById(id);
+
+        // remove room from user booked list
+        await db.User.updateMany(
+            {},
+            {$pull: {'bookedRooms': id}}
+        )        
+
+        // update room data
+        room.availability = availability;
+        room.bookedBy = null;
+        await room.save();
+       
+        switch(availability){
+            case 'private':
+                return res.status(200).json({message: `Room successfully take down.`});
+            case 'public':
+                return res.status(200).json({message: `Room successfully launched.`});
+        }
     } catch(err){
         return next({
             status: 400,
@@ -83,7 +138,9 @@ exports.updateRoom = async function(req, res, next){
 
 exports.bookRoom = async function(req, res, next){
     const id = req.params.id;
-    const {bookedBy, availability} = req.body;
+    const {availability} = req.body;
+
+    const bookedBy = getUserIDFromToken(req);
 
     if (!bookedBy || !availability ) {
 
@@ -97,25 +154,24 @@ exports.bookRoom = async function(req, res, next){
         const room = await db.Room.findById(id);
         const user = await db.User.findById(bookedBy);
 
-        if (room.availability == "private" ) {
-
+        if(room.availability == "private"){
             return next({
                 status: 422,
-                message: "This room is not launched yet."
+                message: "This room is not yet launched."
             });
         }
 
         switch(availability){
             case "booked":
                 if(!room.bookedBy){
-                    // update room owner user id
+                    // update room data
                     await db.Room.findByIdAndUpdate(id, {availability, bookedBy}, {useFindAndModify: false});
 
                     // update user booked rooms list                    
                     user.bookedRooms.push(id);
                     await user.save();
 
-                    return res.status(200).json({message: `Room ${id} booked!`});
+                    return res.status(200).json({message: `Room successfully booked.`});
                 }
                 else {
                     return next({
@@ -125,14 +181,21 @@ exports.bookRoom = async function(req, res, next){
                 }        
             case "public":
                 if(room.bookedBy){
-                     // update room owner user id
+                    if(room.bookedBy !=  bookedBy){
+                        return next({
+                            status: 422,
+                            message: "This room is not your room."
+                        });
+                    }
+
+                    // update room owner user id
                     await db.Room.findByIdAndUpdate(id, {availability, bookedBy: null}, {useFindAndModify: false});
 
                     // update user booked rooms list                    
                     user.bookedRooms.remove(id);
                     await user.save();
 
-                    return res.status(200).json({message: `Rome ${id} booking cancel!`});
+                    return res.status(200).json({message: `Rome booking cancel!`});
                 }
                 else {
                     return next({
@@ -142,8 +205,8 @@ exports.bookRoom = async function(req, res, next){
                 }
             default:
                 return next({
-                    status: 401,
-                    message: "Unauthorized role."
+                    status: 422,
+                    message: "Invalid booking."
                 });      
         }                         
     } catch(err){

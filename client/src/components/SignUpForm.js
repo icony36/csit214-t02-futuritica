@@ -1,4 +1,5 @@
 import React from 'react';
+import Message from './Message';
 
 const SignUpForm = props => {
     
@@ -6,11 +7,7 @@ const SignUpForm = props => {
 
     return(
         <>
-             {errors.message && 
-                <div className='alert alert-danger'>
-                    {errors.message}
-                </div>
-            }
+            <Message type='error' errors={errors}/>
             
             <label htmlFor='email'>Email (required):</label>
             <input 

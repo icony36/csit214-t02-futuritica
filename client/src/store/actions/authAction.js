@@ -30,10 +30,11 @@ export const authUser = (type, userData, history) => async dispatch => {
    }
 }
 
-export const logout = () => dispatch => {
+export const logout = history => dispatch => {
     localStorage.clear();
     setAuthToken(false);
 
     dispatch(setCurrentUser({}));
+    history.push('/');
 }
     

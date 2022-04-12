@@ -14,14 +14,14 @@ exports.loginRequired = function(req, res, next){
                 else {
                     return next({
                         status: 401,
-                        message: "Please log in first."
+                        message: "Please sign in first."
                     })
                 }
         });
     } catch(err){
         return next({
             status: 401,
-            message: "Please log in first."
+            message: "Please sign in first."
         })
     }
 }

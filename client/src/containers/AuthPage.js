@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { authUser, removeError } from '../store/actions';
 import SignInForm from '../components/SignInForm';
 import SignUpForm from '../components/SignUpForm';
+import withAuth from "../hocs/withAuth";
 
 const AuthPage = ({heading, buttonText, isSignUp, history}) => {
     const errors = useSelector(state => state.errors);
@@ -48,10 +50,16 @@ const AuthPage = ({heading, buttonText, isSignUp, history}) => {
                             : <SignInForm handleChange={handleChange} errors={errors} email={formData.email} password={formData.password} />}
                         <button type="submit" className='btn btn-primary btn-block btn-lg' style={{marginTop: "2rem"}}>{buttonText}</button>
                     </form>
+                    <div style={{marginTop: '1rem'}}>
+                        {isSignUp?
+                            <Link to='signin'>Already have an account? Sign in here!</Link> :
+                            <Link to='signup'>Don't have an account? Sign up here!</Link>
+                        }
+                    </div>
                 </div>
             </div>
         </div>
     )
 }
 
-export default AuthPage;
+export default withAuth(AuthPage, null, true);

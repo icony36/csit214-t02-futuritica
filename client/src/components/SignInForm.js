@@ -1,15 +1,12 @@
 import React from 'react';
+import Message from './Message';
 
 const SignInForm = props => {
     const { email, password, errors, handleChange } = props;
 
     return(
         <>
-            {errors.message && 
-                <div className='alert alert-danger'>
-                    {errors.message}
-                </div>
-            }
+            <Message type='error' errors={errors}/>
             
             <label htmlFor='email'>Email:</label>
             <input 

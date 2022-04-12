@@ -1,11 +1,15 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
-const withAuth = (Component, allowedRole) => {
+
+const withAuth = (Component, allowedRole, isAuth) => {
     const Authenticate = props => {
         useEffect(() => {
             if(!props.auth.isAuthenticated){
                 props.history.push("/signin");
+            }
+            else if(isAuth){
+                props.history.push("/");
             }
             else if( allowedRole && allowedRole !== props.auth.user.role){
                 props.history.push("/");
@@ -20,8 +24,7 @@ const withAuth = (Component, allowedRole) => {
 
 const mapStateToProps = state => (
     {
-        auth: state.auth,
-        erros: state.errors
+        auth: state.auth
     }
 )
 

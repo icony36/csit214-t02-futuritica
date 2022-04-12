@@ -19,12 +19,14 @@ exports.signup = async function(req, res, next){
         const token = jwt.sign({id, email, role}, process.env.SECRET_KEY);
 
         return res.status(200).json({
-            id,
-            email,
-            username,
-            role,
+            user:{
+                 id,
+                 email,
+                 username,
+                 role,
+            },
             token
-        })
+         });
     } catch(err){
         // if validation fail
         if(err.code === 11000){

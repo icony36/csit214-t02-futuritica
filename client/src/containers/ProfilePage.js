@@ -2,9 +2,9 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
-import { fetchUserDetails } from '../store/actions';
+import { fetchUserDetails, logout } from '../store/actions';
 
-const Profile = props => {
+const Profile = ({history}) => {
     const userDetails = useSelector(state => state.userDetails);
     const dispatch = useDispatch();
 
@@ -15,6 +15,11 @@ const Profile = props => {
  
         fetchData();
      },[]);
+
+    const handleLogout = e => {
+        e.preventDefault();
+        dispatch(logout(history));
+    }
 
     return(
         <div>      
@@ -31,7 +36,7 @@ const Profile = props => {
                 {userDetails.role === 'student' && <h6>Booked room:</h6>}    
                 <ul>
                     {userDetails.role === 'student' && userDetails.bookedRooms && userDetails.bookedRooms.map(r=>(
-                        <li>
+                        <li key={r._id}>
                             <Link to={`/room/${r._id}`}>
                                 <h6>
                                     {dayjs(r.timestamp).format("DD-MMMM-YYYY HH:mm")}
@@ -40,6 +45,9 @@ const Profile = props => {
                         </li>
                     ))}
                 </ul>
+             </div>
+             <div>
+             <button onClick={handleLogout} className='btn btn-danger btn-block' style={{marginTop: "2rem"}}>Logout</button>
              </div>
         </div>
     )

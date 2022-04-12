@@ -22,7 +22,7 @@ exports.updateUser = async function(req, res, next){
         // update room details
         await db.User.findByIdAndUpdate(id, {...req.body}, {useFindAndModify: false});
 
-        return res.status(200).json({message: `Profile updated ${id}!`});
+        return res.status(200).json({message: `Profile successfully updated.`});
     } catch(err){
         return next({
             status: 400,

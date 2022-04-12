@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import DatePicker from 'react-date-picker';
 import { postNewRoom, removeError } from '../store/actions';
+import { AVAL } from '../constants';
 
 const RoomNewPage = ({history}) => {
     const errors = useSelector(state => state.errors);
@@ -67,7 +68,7 @@ const RoomNewPage = ({history}) => {
         e.preventDefault();
     
         console.log(roomData);
-        dispatch(postNewRoom(roomData));
+        dispatch(postNewRoom(roomData, history));
         setRoomData(defaultRoomData);
     }
 
@@ -79,154 +80,156 @@ const RoomNewPage = ({history}) => {
     }
 
     return(
-        <div>
-            <h2>Create a new room</h2>
-            <form onSubmit={handleSubmit}>
-                {errors.message && 
-                    <div className='alert alert-danger'>
-                        {errors.message}
+        <div className='row justify-content-md-center text-center'>
+            <div className='col-md-4'>
+                <h2>Create a new room</h2>
+                <form onSubmit={handleSubmit}>
+                    {errors.message && 
+                        <div className='alert alert-danger'>
+                            {errors.message}
+                        </div>
+                    }
+                    
+                    <label htmlFor='timestamp'>Date (required):</label>
+                    <div className='form-group'>
+                        {/* <DateTimePicker clearIcon={null} disableClock onChange={handleChange} value={roomData.timestamp}/> */}
+                        <DatePicker className={'form-control'} format={'dd-MM-y'}clearIcon={null} onChange={handleDate} value={roomData.timestamp} />
                     </div>
-                }
-                
-                <label htmlFor='timestamp'>Date (required):</label>
-                <div className='form-group'>
-                    {/* <DateTimePicker clearIcon={null} disableClock onChange={handleChange} value={roomData.timestamp}/> */}
-                    <DatePicker className={'form-control'} format={'dd-MM-y'}clearIcon={null} onChange={handleDate} value={roomData.timestamp} />
-                </div>
 
-                {/* <div>{roomData.timestamp}</div> */}
+                    {/* <div>{roomData.timestamp}</div> */}
 
-                <label htmlFor='timestamp'>Timeslot (required):</label>
-                    <span>
+                    <label htmlFor='timestamp'>Timeslot (required):</label>
+                        <span>
+                        <select 
+                            className='form-control' 
+                            id='timestamp-hours' 
+                            name='timestamp-hours' 
+                            onChange={handleHours} 
+                            value={roomData.timestamp.getHours()}                        
+                        >
+                            <option value={8}>
+                                08:00
+                            </option>
+                            <option value={9}>
+                                09:00
+                            </option>
+                            <option value={10}>
+                                10:00
+                            </option>
+                            <option value={11}>
+                                11:00
+                            </option>
+                            <option value={12}>
+                                12:00
+                            </option>
+                            <option value={13}>
+                                13:00
+                            </option>
+                            <option value={14}>
+                                14:00
+                            </option>
+                            <option value={15}>
+                                15:00
+                            </option>
+                            <option value={16}>
+                                16:00
+                            </option>
+                            <option value={17}>
+                                17:00
+                            </option>
+                            <option value={18}>
+                                18:00
+                            </option>
+                            <option value={19}>
+                                19:00
+                            </option>
+                            <option value={20}>
+                                20:00
+                            </option>
+                            <option value={21}>
+                                21:00
+                            </option>
+                            <option value={22}>
+                                22:00
+                            </option>
+                        </select>
+                    </span>
+                    {/* <span>
+                        <select 
+                            className='form-control' 
+                            id='timestamp-minutes' 
+                            name='timestamp-minutes' 
+                            onChange={handleMinutes} 
+                            value={roomData.timestamp.getMinutes()}
+                        >
+                            <option value={0}>
+                                00
+                            </option>
+                            <option value={30}>
+                                30
+                            </option>
+                        </select>                    
+                    </span> */}
+
+                    <label htmlFor='capacity'>Capacity (required):</label> 
                     <select 
                         className='form-control' 
-                        id='timestamp-hours' 
-                        name='timestamp-hours' 
-                        onChange={handleHours} 
-                        value={roomData.timestamp.getHours()}                        
+                        id='capacity' 
+                        name='capacity' 
+                        onChange={handleChange} 
+                        value={roomData.capacity}
                     >
-                        <option value={8}>
-                            08:00
+                        <option value={1}>
+                            1 person
                         </option>
-                        <option value={9}>
-                            09:00
-                        </option>
-                        <option value={10}>
-                            10:00
-                        </option>
-                        <option value={11}>
-                            11:00
+                        <option value={6}>
+                            6 person
                         </option>
                         <option value={12}>
-                            12:00
+                            12 person
                         </option>
-                        <option value={13}>
-                            13:00
-                        </option>
-                        <option value={14}>
-                            14:00
-                        </option>
-                        <option value={15}>
-                            15:00
-                        </option>
-                        <option value={16}>
-                            16:00
-                        </option>
-                        <option value={17}>
-                            17:00
-                        </option>
-                        <option value={18}>
-                            18:00
-                        </option>
-                        <option value={19}>
-                            19:00
-                        </option>
-                        <option value={20}>
-                            20:00
-                        </option>
-                        <option value={21}>
-                            21:00
-                        </option>
-                        <option value={22}>
-                            22:00
-                        </option>
-                    </select>
-                </span>
-                {/* <span>
+                    </select>   
+
+                    <label htmlFor='price'>Price (required):</label>
+                    <input 
+                        className='form-control' 
+                        id='price' 
+                        name='price' 
+                        onChange={handleChange} 
+                        value={roomData.price} 
+                        onKeyPress={(e) => !/[0-9]/.test(e.key) && e.preventDefault()} 
+                    />
+
+                    <label htmlFor='promotionCode'>PromotionCode:</label>
+                    <input 
+                        className='form-control' 
+                        id='promotionCode' 
+                        name='promotionCode' 
+                        onChange={handleChange} 
+                        value={roomData.promotionCode} 
+                        type="text" 
+                    />
+
+                    <label htmlFor='availability'>Availability (required):</label>
                     <select 
                         className='form-control' 
-                        id='timestamp-minutes' 
-                        name='timestamp-minutes' 
-                        onChange={handleMinutes} 
-                        value={roomData.timestamp.getMinutes()}
+                        id='availability' 
+                        name='availability' 
+                        onChange={handleChange} 
+                        value={roomData.availability}
                     >
-                        <option value={0}>
-                            00
+                        <option value="" disabled hidden>Choose...</option>
+                        <option value={AVAL.private}>
+                            Private
                         </option>
-                        <option value={30}>
-                            30
+                        <option value={AVAL.public}>
+                            Public
                         </option>
-                    </select>                    
-                </span> */}
+                    </select>
 
-                <label htmlFor='capacity'>Capacity (required):</label> 
-                 <select 
-                    className='form-control' 
-                    id='capacity' 
-                    name='capacity' 
-                    onChange={handleChange} 
-                    value={roomData.capacity}
-                >
-                    <option value={1}>
-                        1 person
-                    </option>
-                    <option value={6}>
-                        6 person
-                    </option>
-                    <option value={12}>
-                        12 person
-                    </option>
-                </select>   
-
-                <label htmlFor='price'>Price (required):</label>
-                <input 
-                    className='form-control' 
-                    id='price' 
-                    name='price' 
-                    onChange={handleChange} 
-                    value={roomData.price} 
-                    type="number" 
-                />
-
-                <label htmlFor='promotionCode'>PromotionCode:</label>
-                <input 
-                    className='form-control' 
-                    id='promotionCode' 
-                    name='promotionCode' 
-                    onChange={handleChange} 
-                    value={roomData.promotionCode} 
-                    type="text" 
-                />
-
-                <label htmlFor='availability'>Availability (required):</label>
-                <select 
-                    className='form-control' 
-                    id='availability' 
-                    name='availability' 
-                    onChange={handleChange} 
-                    value={roomData.availability}
-                >
-                    <option value="" disabled hidden>Choose...</option>
-                    <option value="private">
-                        Private
-                    </option>
-                    <option value="public">
-                        Public
-                    </option>
-                </select>
-
-                <button type="submit" className='btn btn-primary btn-block btn-lg' style={{marginTop: "2rem"}}>Create room</button>
-            </form>
+                    <button type="submit" className='btn btn-primary btn-block btn-lg' style={{marginTop: "2rem"}}>Create room</button>
+                </form>
+            </div>
         </div>
     )
 }
