@@ -67,6 +67,11 @@ ul.nav.navbar-nav li a:hover{
     background-size: cover;
 }
 
+.landing-hero .display-1 {
+    font-weight: bold;
+    color: #0077b6;
+}
+
 /* RoomList */
 .room-list .list-group-item {
     display: flex;

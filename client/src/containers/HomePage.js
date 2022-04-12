@@ -17,8 +17,8 @@ const HomePage = () => {
 
     return(
         <div className='landing-hero'>
-            <h1 style={{fontWeight: "bold"}}>Futuristica</h1>
-            <p className='subtitle'>A room booking system for CSIT214</p>
+            <h1 className='display-1' >Futuristica</h1>
+            <p className='lead'>A room booking system for CSIT214 group project</p>
             <div style={{marginTop: '2rem'}}>
                 <Link to="/signin" className="btn btn-primary">Sign In Here</Link>
             </div>
