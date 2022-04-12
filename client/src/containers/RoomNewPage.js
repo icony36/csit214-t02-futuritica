@@ -80,7 +80,7 @@ const RoomNewPage = ({history}) => {
     }
 
     return(
-        <div className='row justify-content-md-center text-center'>
+        <div className='row justify-content-md-center'>
             <div className='col-md-4'>
                 <h2>Create a new room</h2>
                 <form onSubmit={handleSubmit}>

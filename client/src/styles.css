@@ -84,3 +84,8 @@ ul.nav.navbar-nav li a:hover{
     border: none;
 }
 
+/* Profile */
+.booked-list a {
+    text-decoration: none;
+    color: black;
+}

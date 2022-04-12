@@ -58,7 +58,9 @@ const RoomPage = () => {
         return(
             <>
                 <Link to={`/room/${id}/edit`}>
-                        <button className='btn btn-primary btn-block' style={{marginTop: "2rem", marginRight: "0.5rem"}}>Edit</button>
+                    <button className='btn btn-primary btn-block' style={{marginTop: "2rem", marginRight: "0.5rem"}}>
+                        Edit
+                    </button>
                 </Link>
                 {currentRoom.availability === AVAL.private ? 
                 <button onClick={handleLaunch} className='btn btn-primary btn-block' style={{marginTop: "2rem"}}>Launch Room</button> :
@@ -68,40 +70,33 @@ const RoomPage = () => {
     }
      
     return(
-      <>
-        <Message type='error' errors={errors}/>
-        {currentRoom &&
-        <div className='room-details'>
-            <h2>
-                {currentRoom.timestamp && dayjs(currentRoom.timestamp).format("DD MMMM YYYY")}
-            </h2>
-            <h4>
-                Timeslot: {currentRoom.timestamp && dayjs(currentRoom.timestamp).format("HH:mm")}
-            </h4>
-            <div>
-                <h6>Room id: {currentRoom._id}</h6>                 
+    <div className='row justify-content-md-center'>
+        <div className='col-md-4'>
+            <Message type='error' errors={errors}/>
+            {currentRoom &&
+            <div className='card room-details' style={{width: '18rem'}}>
+                <div className='card-body'>
+                    <h4 className='card-title'>
+                        {currentRoom.timestamp && dayjs(currentRoom.timestamp).format("DD MMMM YYYY")}
+                    </h4>
+                    <h6 className='class-subtitle mb-2 text-muted'>
+                        Time: {currentRoom.timestamp && dayjs(currentRoom.timestamp).format("HH:mm")}
+                    </h6>           
+                    {currentRoom.bookedBy &&  <h6 className='class-subtitle text-muted'>Booked by: {currentRoom.bookedBy.username}</h6>}   
+                </div>
+                <ul className='list-group list-group-flush'>
+                    <li className='list-group-item'>Availability: {currentRoom.availability}</li>
+                    <li className='list-group-item'>Capacity: {currentRoom.capacity} person</li>
+                    <li className='list-group-item'>Price: {currentRoom.price ? `${currentRoom.price}` : "Free" }</li>                     
+                    {currentRoom.promotionCode? <li className='list-group-item'>Promotion Code: {currentRoom.promotionCode}</li> : null}
+                </ul>
+                    <div className='card-body text-center'>
+                        {auth.user.role === ROLE.staff ? renderStaffBtn() : renderStudentBtn()}
+                    </div>
             </div>
-            <div>
-            <h6>Availability: {currentRoom.availability}</h6>                 
-            </div>
-            <div>
-            <h6>Capacity: {currentRoom.capacity} person</h6>                 
-            </div>
-            <div>
-            <h6>Price: ${currentRoom.price}</h6>
-            </div>
-            <div>
-            {currentRoom.promotionCode? <h6>Promotion Code: {currentRoom.promotionCode}</h6> : null}
-            </div>
-            <div>
-                {currentRoom.bookedBy ?  <h6>Booked by: {currentRoom.bookedBy.username}</h6> : null}                
-            </div>
-            <div>
-                {auth.user.role === ROLE.staff ? renderStaffBtn() : renderStudentBtn()}
-            </div>
+            }
         </div>
-        }
-      </>
+    </div>
     )
 }
 

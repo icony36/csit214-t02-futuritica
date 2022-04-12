@@ -41,7 +41,7 @@ const AuthPage = ({heading, buttonText, isSignUp, history}) => {
     }
     return(
         <div>
-            <div className='row justify-content-md-center text-center'>
+            <div className='row justify-content-md-center'>
                 <div className='col-md-6'>
                     <h2>{heading}</h2>
                     <form onSubmit={handleSubmit}>

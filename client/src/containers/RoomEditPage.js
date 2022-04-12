@@ -48,7 +48,7 @@ const RoomEditPage = ({history}) => {
     }
     
     return(
-        <div className='row justify-content-md-center text-center'>
+        <div className='row justify-content-md-center'>
             {currentRoom && 
                 <div className='col-md-4'>
                     <form onSubmit={handleSubmit}>
