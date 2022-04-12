@@ -44,12 +44,12 @@ const RoomPage = () => {
     const renderStudentBtn = () => {
         if(currentRoom.availability === AVAL.booked && currentRoom.bookedBy._id === auth.user.id){
             return(
-                <button onClick={handleCancel} className='btn btn-danger btn-block' style={{marginTop: "2rem"}}>Cancel Booking</button>
+                <button onClick={handleCancel} className='btn btn-danger btn-block'>Cancel Booking</button>
             )
         }
         else if(currentRoom.availability === AVAL.public){
             return (
-                <button onClick={handleBook} className='btn btn-primary btn-block' style={{marginTop: "2rem"}}>Book Room</button>
+                <button onClick={handleBook} className='btn btn-primary btn-block'>Book Room</button>
             )
         }
     }
@@ -58,13 +58,13 @@ const RoomPage = () => {
         return(
             <>
                 <Link to={`/room/${id}/edit`}>
-                    <button className='btn btn-primary btn-block' style={{marginTop: "2rem", marginRight: "0.5rem"}}>
+                    <button className='btn btn-primary btn-block' style={{ marginRight: "0.5rem"}}>
                         Edit
                     </button>
                 </Link>
                 {currentRoom.availability === AVAL.private ? 
-                <button onClick={handleLaunch} className='btn btn-primary btn-block' style={{marginTop: "2rem"}}>Launch Room</button> :
-                <button onClick={handleTakedown} className='btn btn-danger btn-block' style={{marginTop: "2rem"}}>Take Down Room</button>}
+                <button onClick={handleLaunch} className='btn btn-primary btn-block'>Launch Room</button> :
+                <button onClick={handleTakedown} className='btn btn-danger btn-block'>Take Down Room</button>}
             </>
         )
     }

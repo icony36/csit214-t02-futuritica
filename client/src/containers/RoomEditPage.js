@@ -49,59 +49,64 @@ const RoomEditPage = ({history}) => {
     
     return(
         <div className='row justify-content-md-center'>
-            {currentRoom && 
-                <div className='col-md-4'>
-                    <form onSubmit={handleSubmit}>
-                        {errors.message && 
-                            <div className='alert alert-danger'>
-                                {errors.message}
+            <div className='col-md-4'> 
+                {errors.message && 
+                           <div className='alert alert-danger card-body'>
+                               {errors.message}
+                           </div>
+                }                              
+                {currentRoom && 
+                    <div className='card'>
+                        <form onSubmit={handleSubmit}>                            
+                            <div className='card-body'>                            
+                                <label htmlFor='capacity'>Capacity:</label> 
+                                <select 
+                                    className='form-control' 
+                                    id='capacity' 
+                                    name='capacity' 
+                                    onChange={handleChange} 
+                                    value={roomEditData.capacity}
+                                >
+                                    <option value={1}>
+                                        1 person
+                                    </option>
+                                    <option value={6}>
+                                        6 person
+                                    </option>
+                                    <option value={12}>
+                                        12 person
+                                    </option>
+                                </select>   
+
+                                <label htmlFor='price'>Price:</label>
+                                <input 
+                                    className='form-control' 
+                                    id='price' 
+                                    name='price' 
+                                    onChange={handleChange} 
+                                    value={roomEditData.price} 
+                                    type="text" 
+                                    onKeyPress={(e) => !/[0-9]/.test(e.key) && e.preventDefault()}
+                                />
+
+                                <label htmlFor='promotionCode'>PromotionCode:</label>
+                                <input 
+                                    className='form-control' 
+                                    id='promotionCode' 
+                                    name='promotionCode' 
+                                    onChange={handleChange} 
+                                    value={roomEditData.promotionCode} 
+                                    type="text" 
+                                />  
                             </div>
-                        }
-                        
-                        <label htmlFor='capacity'>Capacity:</label> 
-                        <select 
-                            className='form-control' 
-                            id='capacity' 
-                            name='capacity' 
-                            onChange={handleChange} 
-                            value={roomEditData.capacity}
-                        >
-                            <option value={1}>
-                                1 person
-                            </option>
-                            <option value={6}>
-                                6 person
-                            </option>
-                            <option value={12}>
-                                12 person
-                            </option>
-                        </select>   
 
-                        <label htmlFor='price'>Price:</label>
-                        <input 
-                            className='form-control' 
-                            id='price' 
-                            name='price' 
-                            onChange={handleChange} 
-                            value={roomEditData.price} 
-                            type="text" 
-                            onKeyPress={(e) => !/[0-9]/.test(e.key) && e.preventDefault()}
-                        />
-
-                        <label htmlFor='promotionCode'>PromotionCode:</label>
-                        <input 
-                            className='form-control' 
-                            id='promotionCode' 
-                            name='promotionCode' 
-                            onChange={handleChange} 
-                            value={roomEditData.promotionCode} 
-                            type="text" 
-                        />  
-
-                        <button style={{marginTop: '1rem'}}type="submit" className='btn btn-primary'>Update</button>
-                    </form>
-                </div>
-            }
+                            <div className='card-body text-center'>
+                                <button type="submit" className='btn btn-primary'>Update</button>
+                            </div>
+                        </form>
+                    </div>  
+                }
+            </div>
         </div>
     )
 }

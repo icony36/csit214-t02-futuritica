@@ -49,7 +49,7 @@ const Profile = ({history}) => {
                      </div>
                     )}    
                     <div className='card-body text-center'>
-                        <button onClick={handleLogout} className='btn btn-danger btn-block' style={{marginTop: "2rem"}}>Logout</button>
+                        <button onClick={handleLogout} className='btn btn-danger btn-block'>Logout</button>
                     </div>
                 </div>
              </div>

@@ -32,11 +32,21 @@ ul.nav.navbar-nav li a:hover{
 /* button */
 .btn-primary {
     background-color: #0077b6;
+    border-color: #0077b6;
 }
 
 .btn-primary:hover {
     background-color: #00b4d8;
     border-color: #00b4d8;
+}
+
+/* .btn-danger {
+    background-color: #ee727f;
+} */
+
+.btn-danger:hover {
+    background-color: #f83f71;
+    border-color: #f83f71;
 }
 
 /* Landing */

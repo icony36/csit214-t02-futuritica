@@ -42,19 +42,27 @@ const AuthPage = ({heading, buttonText, isSignUp, history}) => {
     return(
         <div>
             <div className='row justify-content-md-center'>
-                <div className='col-md-6'>
-                    <h2>{heading}</h2>
-                    <form onSubmit={handleSubmit}>
-                        {isSignUp ? 
-                            <SignUpForm handleChange={handleChange} errors={errors} email={formData.email} username={formData.username} password={formData.password} role={formData.role}/> 
-                            : <SignInForm handleChange={handleChange} errors={errors} email={formData.email} password={formData.password} />}
-                        <button type="submit" className='btn btn-primary btn-block btn-lg' style={{marginTop: "2rem"}}>{buttonText}</button>
-                    </form>
-                    <div style={{marginTop: '1rem'}}>
-                        {isSignUp?
-                            <Link to='signin'>Already have an account? Sign in instead!</Link> :
-                            <Link to='signup'>Don't have an account? Sign up here!</Link>
-                        }
+                <div className='col-md-4'>
+                    <div className='card'>
+                        <div className='card-body text-center'>
+                            <h1 className='class-title'>{heading}</h1>
+                        </div>
+                        <form onSubmit={handleSubmit}>
+                            <div className='card-body'>
+                                {isSignUp ? 
+                                    <SignUpForm handleChange={handleChange} errors={errors} email={formData.email} username={formData.username} password={formData.password} role={formData.role}/> 
+                                    : <SignInForm handleChange={handleChange} errors={errors} email={formData.email} password={formData.password} />}
+                            </div>
+                            <div className='card-body text-center'>
+                                <button type="submit" className='btn btn-primary btn-block btn-lg'>{buttonText}</button>
+                            </div>
+                        </form>
+                        <div className='card-body text-center card-link'>
+                            {isSignUp?
+                                <Link to='signin'>Already have an account? Sign in instead!</Link> :
+                                <Link to='signup'>Don't have an account? Sign up here!</Link>
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
