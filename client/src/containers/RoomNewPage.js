@@ -92,8 +92,7 @@ const RoomNewPage = ({history}) => {
                     
                     <label htmlFor='timestamp'>Date (required):</label>
                     <div className='form-group'>
-                        {/* <DateTimePicker clearIcon={null} disableClock onChange={handleChange} value={roomData.timestamp}/> */}
-                        <DatePicker className={'form-control'} format={'dd-MM-y'}clearIcon={null} onChange={handleDate} value={roomData.timestamp} />
+                        <DatePicker className={'form-control'} format={'dd-MM-y'} minDate={new Date()} clearIcon={null} onChange={handleDate} value={roomData.timestamp} />
                     </div>
 
                     {/* <div>{roomData.timestamp}</div> */}
