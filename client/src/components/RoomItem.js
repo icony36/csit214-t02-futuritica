@@ -35,7 +35,7 @@ const MessageItem = props => {
         <Link to={`/room/${id}`}>
                 <li className='list-group-item'>
                     <span className='roomitem-text'>
-                        {date.format("DD-MM-YYYY")}              
+                        {date.format("DD MMM YYYY")}              
                     </span>
                     <span className='roomitem-text'>
                         {date.format("HH:mm")}              
