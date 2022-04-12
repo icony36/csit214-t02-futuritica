@@ -8,25 +8,16 @@ const MessageItem = props => {
     const date = dayjs(timestamp);
 
     return(
-        <Link to={`/room/${id}`}>
-            <li className='list-group-item'>
-                <span className='text-muted'>
+        <li className='list-group-item'>
+            <Link to={`/room/${id}`}>
+                <span className='roomitem-date'>
                     {date.format("DD-MM-YYYY")}              
                 </span>
-                <span className='text-muted'>
-                    {date.format("HH:mm")}
+                <span className='roomitem-time'>
+                    {date.format("HH:mm")}              
                 </span>
-                <span>
-                    Capacity: {capacity}
-                </span>
-                <span>
-                    Price: {price}
-                </span>
-                <span>
-                    Booked by: {bookedBy}
-                </span>
-            </li>
-        </Link>
+            </Link>
+        </li>
     )   
 }
 

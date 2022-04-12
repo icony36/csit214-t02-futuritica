@@ -31,7 +31,7 @@ const RoomList = () => {
     return(
         <div className='row'>
             <div className='offset-1 col-sm-10'>
-                <ul className='list-group' id='room-list'>
+                <ul className='room-list list-group' >
                     {roomList}
                 </ul>
             </div>

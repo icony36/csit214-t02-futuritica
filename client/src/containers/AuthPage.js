@@ -52,7 +52,7 @@ const AuthPage = ({heading, buttonText, isSignUp, history}) => {
                     </form>
                     <div style={{marginTop: '1rem'}}>
                         {isSignUp?
-                            <Link to='signin'>Already have an account? Sign in here!</Link> :
+                            <Link to='signin'>Already have an account? Sign in instead!</Link> :
                             <Link to='signup'>Don't have an account? Sign up here!</Link>
                         }
                     </div>

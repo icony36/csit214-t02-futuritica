@@ -58,13 +58,25 @@ ul.nav.navbar-nav li a:hover{
 }
 
 /* RoomList */
-#room-list .list-group-item {
+.room-list .list-group-item {
     display: flex;
     align-items: flex-start;
+    cursor: pointer;
 }
 
-#room-list:not(.no-hover) .list-group-item:hover {
+.room-list .list-group-item a {
+    text-decoration: none;
+    color: black;
+    width: 100%;
+}
+
+.room-list:not(.no-hover) .list-group-item:hover {
     background-color: #caf0f8;
+}
+
+/* RoomItem */
+.roomitem-date {
+    margin-right: 1rem;
 }
 
 /* RoomNew */
