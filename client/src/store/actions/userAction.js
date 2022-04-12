@@ -18,7 +18,12 @@ export const fetchUserDetails = () => async (dispatch, getState) => {
         dispatch(loadUserDetails(res));
         dispatch(removeError());
    } catch(err){
-        dispatch(addError(err));
+        if(err){
+            dispatch(addError(err));
+        }
+        else{
+            console.log(err);
+        }
    }
 }
 
