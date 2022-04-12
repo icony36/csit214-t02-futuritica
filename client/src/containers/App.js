@@ -9,7 +9,7 @@ import RoomNewPage from './RoomNewPage';
 import RoomEditPage from './RoomEditPage';
 import RoomPage from './RoomPage';
 import withAuth from "../hocs/withAuth";
-import { ROLE } from "../constants";
+import { ROLE, PAGE_TYPES } from "../constants";
 
 const App = () => {
 
@@ -30,10 +30,10 @@ const App = () => {
                                 <AuthPage isSignUp buttonText="Sign Up" heading="Sign Up" {...props}/>
                             )
                         }} />
-                        <Route exact path="/profile" component={withAuth(ProfilePage)}/>
-                        <Route exact path="/room/new" component={withAuth(RoomNewPage, ROLE.staff)}/>
-                        <Route exact path="/room/:id" component={withAuth(RoomPage)}/>
-                        <Route exact path="/room/:id/edit" component={withAuth(RoomEditPage, ROLE.staff)}/>
+                        <Route exact path="/profile" component={withAuth(ProfilePage, PAGE_TYPES.private)}/>
+                        <Route exact path="/room/new" component={withAuth(RoomNewPage, PAGE_TYPES.role,ROLE.staff)}/>
+                        <Route exact path="/room/:id" component={withAuth(RoomPage, PAGE_TYPES.private)}/>
+                        <Route exact path="/room/:id/edit" component={withAuth(RoomEditPage, PAGE_TYPES.role,ROLE.staff)}/>
                     </Switch>
                 </div>
             </div>

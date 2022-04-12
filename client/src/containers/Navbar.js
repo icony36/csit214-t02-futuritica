@@ -12,18 +12,24 @@ const Navbar = () => {
                 <Link to="/" className='navbar-brand'>
                     Futuristica
                 </Link>
-                {auth.isAuthenticated && (
                 <ul className='nav navbar-nav navbar-right'>    
-                    {auth.user.role === ROLE.staff && 
-                     <li>
-                        <Link to="/room/new">Create room</Link>
-                    </li>
-                    }
+                {auth.isAuthenticated ?(
+                    <>
+                        {auth.user.role === ROLE.staff && 
+                        <li>
+                            <Link to="/room/new">Create room</Link>
+                        </li>
+                        }
+                        <li>
+                            <Link to="/profile">Profile</Link>
+                        </li>
+                    </>
+                ) : (    
                     <li>
-                        <Link to="/profile">Profile</Link>
+                        <Link to="/signin">Sign In</Link>
                     </li>
-                </ul>
-                )}
+               )}
+               </ul>
             </div>
         </nav>
     )

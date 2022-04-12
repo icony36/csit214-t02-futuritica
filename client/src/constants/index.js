@@ -8,3 +8,9 @@ export const AVAL = Object.freeze({
     public: 'public',
     private: 'private'
 })
+
+export const PAGE_TYPES = Object.freeze({
+    auth: 'auth',
+    private: 'private',
+    role: 'role'
+})

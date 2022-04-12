@@ -5,6 +5,7 @@ import { authUser, removeError } from '../store/actions';
 import SignInForm from '../components/SignInForm';
 import SignUpForm from '../components/SignUpForm';
 import withAuth from "../hocs/withAuth";
+import { PAGE_TYPES } from '../constants';
 
 const AuthPage = ({heading, buttonText, isSignUp, history}) => {
     const errors = useSelector(state => state.errors);
@@ -70,4 +71,4 @@ const AuthPage = ({heading, buttonText, isSignUp, history}) => {
     )
 }
 
-export default withAuth(AuthPage, null, true);
+export default withAuth(AuthPage, PAGE_TYPES.auth, true);
