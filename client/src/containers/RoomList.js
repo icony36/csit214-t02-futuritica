@@ -17,6 +17,18 @@ const RoomList = () => {
 
        fetchData();
     },[]);
+
+    const compare = (a, b) => {        
+        if ( a.timestamp < b.timestamp ){
+          return -1;
+        }
+        if ( a.timestamp > b.timestamp ){
+          return 1;
+        }
+        return 0;
+    }
+
+    rooms.sort(compare); // sort room based on timestamp
     
     const publicRoomList = rooms.filter(r => (r.availability === AVAL.public || r.availability === AVAL.booked)).map(r=> (
         <RoomItem
@@ -41,6 +53,8 @@ const RoomList = () => {
                     bookedBy={r.bookedBy ? r.bookedBy.username : null}                
                     />
     ))
+
+   
 
     return(
         <div className='row'>
