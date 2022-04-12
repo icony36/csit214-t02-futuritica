@@ -8,16 +8,16 @@ const MessageItem = props => {
     const date = dayjs(timestamp);
 
     return(
-        <li className='list-group-item'>
-            <Link to={`/room/${id}`}>
+        <Link to={`/room/${id}`}>
+                <li className='list-group-item'>
                 <span className='roomitem-date'>
                     {date.format("DD-MM-YYYY")}              
                 </span>
                 <span className='roomitem-time'>
                     {date.format("HH:mm")}              
                 </span>
+            </li>
             </Link>
-        </li>
     )   
 }
 

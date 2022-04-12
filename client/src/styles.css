@@ -71,10 +71,10 @@ ul.nav.navbar-nav li a:hover{
 .room-list .list-group-item {
     display: flex;
     align-items: flex-start;
-    cursor: pointer;
+
 }
 
-.room-list .list-group-item a {
+.room-list a {
     text-decoration: none;
     color: black;
     width: 100%;
