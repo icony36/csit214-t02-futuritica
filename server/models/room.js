@@ -9,7 +9,6 @@ const roomSchema = new mongoose.Schema({
     },
     timestamp: {
         type: Date,
-        unique: true,
         required: true
     },
     capacity: {
