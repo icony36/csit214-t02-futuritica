@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { fetchRooms, updateRoom } from '../store/actions';
+import DatePicker from 'react-date-picker'
+import dayjs from 'dayjs';
+import { fetchRooms, updateRoom, removeError } from '../store/actions';
 
 const RoomEditPage = ({history}) => {
     const errors = useSelector(state=>state.errors);
@@ -12,7 +14,11 @@ const RoomEditPage = ({history}) => {
 
     const currentRoom = rooms.filter(r => r._id === id)[0];
 
+    const currentDate = new Date();
+    currentDate.setHours(8, 0, 0, 0);
+
     const initState = {
+        timestamp: currentRoom ? new Date(currentRoom.timestamp) : currentDate,
         capacity: currentRoom ? currentRoom.capacity : 0,
         price: currentRoom ? currentRoom.price : 0,
         promotionCode: currentRoom ? currentRoom.promotionCode : "",
@@ -41,12 +47,42 @@ const RoomEditPage = ({history}) => {
         ))
     }
 
+    const handleDate = date => {
+        date.setHours(8, 0, 0, 0);
+        
+        setRoomEditData(prevState => (
+            {
+                ...prevState,
+                timestamp: date
+            }
+        ))
+    }
+
+    const handleHours = e => {
+        const date = roomEditData.timestamp;
+        date.setHours(e.target.value)
+        
+        setRoomEditData(prevState => (
+            {
+                ...prevState,
+                timestamp: date
+            }
+        ))
+    }
+
     const handleSubmit = e => {
         e.preventDefault();
     
         dispatch(updateRoom(roomEditData, id, history));
     }
-    
+
+    if(errors.message){
+        const unlisten = history.listen(() => {
+            dispatch(removeError());
+            unlisten()
+        })
+    }
+
     return(
         <div className='row justify-content-md-center'>
             <div className='col-md-4'> 
@@ -58,7 +94,76 @@ const RoomEditPage = ({history}) => {
                 {currentRoom && 
                     <div className='card'>
                         <form onSubmit={handleSubmit}>                            
-                            <div className='card-body'>                            
+                            <div className='card-body'>  
+                                <label htmlFor='timestamp'>Date:</label>
+                                <div className='form-group'>
+                                    <DatePicker 
+                                    className={'form-control'} 
+                                    format={'dd-MM-y'} 
+                                    minDate={new Date()} 
+                                    clearIcon={null} 
+                                    onChange={handleDate} 
+                                    value={roomEditData.timestamp}
+                                    />
+                                </div>
+
+                                <label htmlFor='timestamp'>Timeslot:</label>
+                                    <span>
+                                    <select 
+                                        className='form-control' 
+                                        id='timestamp-hours' 
+                                        name='timestamp-hours' 
+                                        onChange={handleHours} 
+                                        value={roomEditData.timestamp.getHours()}                        
+                                    >
+                                        <option value={8}>
+                                            08:00
+                                        </option>
+                                        <option value={9}>
+                                            09:00
+                                        </option>
+                                        <option value={10}>
+                                            10:00
+                                        </option>
+                                        <option value={11}>
+                                            11:00
+                                        </option>
+                                        <option value={12}>
+                                            12:00
+                                        </option>
+                                        <option value={13}>
+                                            13:00
+                                        </option>
+                                        <option value={14}>
+                                            14:00
+                                        </option>
+                                        <option value={15}>
+                                            15:00
+                                        </option>
+                                        <option value={16}>
+                                            16:00
+                                        </option>
+                                        <option value={17}>
+                                            17:00
+                                        </option>
+                                        <option value={18}>
+                                            18:00
+                                        </option>
+                                        <option value={19}>
+                                            19:00
+                                        </option>
+                                        <option value={20}>
+                                            20:00
+                                        </option>
+                                        <option value={21}>
+                                            21:00
+                                        </option>
+                                        <option value={22}>
+                                            22:00
+                                        </option>
+                                    </select>
+                                </span>
+
                                 <label htmlFor='capacity'>Capacity:</label> 
                                 <select 
                                     className='form-control' 

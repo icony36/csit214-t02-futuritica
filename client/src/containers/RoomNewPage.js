@@ -32,6 +32,8 @@ const RoomNewPage = ({history}) => {
     }
 
     const handleDate = date => {
+        date.setHours(8, 0, 0, 0);
+        
         setRoomData(prevState => (
             {
                 ...prevState,
@@ -98,8 +100,6 @@ const RoomNewPage = ({history}) => {
                             <div className='form-group'>
                                 <DatePicker className={'form-control'} format={'dd-MM-y'} minDate={new Date()} clearIcon={null} onChange={handleDate} value={roomData.timestamp} />
                             </div>
-
-                            {/* <div>{roomData.timestamp}</div> */}
 
                             <label htmlFor='timestamp'>Timeslot (required):</label>
                                 <span>
