@@ -17,25 +17,25 @@ const App = () => {
         <BrowserRouter>
             <div>
                 <Navbar />                    
+                <Switch>
+                <Route exact path="/" component={HomePage} />
                 <div className="container">
-                    <Switch>
-                        <Route exact path="/" component={HomePage} />
-                        <Route exact path="/signin"  render={props=> {
-                          return(
-                                <AuthPage buttonText="Sign In" heading="Sign In" {...props}/>
-                            )
-                        }} />
-                        <Route exact path="/signup" render={props=> {
-                          return(
-                                <AuthPage isSignUp buttonText="Sign Up" heading="Sign Up" {...props}/>
-                            )
-                        }} />
-                        <Route exact path="/profile" component={withAuth(ProfilePage, PAGE_TYPES.private)}/>
-                        <Route exact path="/room/new" component={withAuth(RoomNewPage, PAGE_TYPES.role,ROLE.staff)}/>
-                        <Route exact path="/room/:id" component={withAuth(RoomPage, PAGE_TYPES.private)}/>
-                        <Route exact path="/room/:id/edit" component={withAuth(RoomEditPage, PAGE_TYPES.role,ROLE.staff)}/>
-                    </Switch>
+                    <Route exact path="/signin"  render={props=> {
+                        return(
+                            <AuthPage buttonText="Sign In" heading="Sign In" {...props}/>
+                        )
+                    }} />
+                    <Route exact path="/signup" render={props=> {
+                        return(
+                            <AuthPage isSignUp buttonText="Sign Up" heading="Sign Up" {...props}/>
+                        )
+                    }} />
+                    <Route exact path="/profile" component={withAuth(ProfilePage, PAGE_TYPES.private)}/>
+                    <Route exact path="/room/new" component={withAuth(RoomNewPage, PAGE_TYPES.role,ROLE.staff)}/>
+                    <Route exact path="/room/:id" component={withAuth(RoomPage, PAGE_TYPES.private)}/>
+                    <Route exact path="/room/:id/edit" component={withAuth(RoomEditPage, PAGE_TYPES.role,ROLE.staff)}/>
                 </div>
+                </Switch>
             </div>
         </BrowserRouter>
     );

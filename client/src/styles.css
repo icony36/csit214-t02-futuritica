@@ -65,6 +65,7 @@ ul.nav.navbar-nav li a:hover{
     padding: 1rem;
     background-position: center center;
     background-size: cover;
+    background-color: #fff;
 }
 
 .landing-hero .display-1 {

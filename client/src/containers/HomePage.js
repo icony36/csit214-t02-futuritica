@@ -9,7 +9,7 @@ const HomePage = () => {
     
     if(auth.isAuthenticated){
         return(
-            <div>
+            <div className='container'>
                <RoomList />
             </div>
         )
