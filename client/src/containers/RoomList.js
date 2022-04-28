@@ -33,16 +33,8 @@ const RoomList = () => {
 
     rooms.sort(compare); // sort room based on timestamp
 
-    const getAvalRoomNum = () => {
-        let count = 0;
-        
-        rooms.filter(r => (r.availability === AVAL.public)).forEach(r => {
-            count++;
-        })
-
-        return count;
-    }
-    
+    const avalRoomNum = rooms.filter(r => (r.availability === AVAL.public)).length;
+   
     const publicRoomList = rooms.filter(r => (r.availability === AVAL.public || r.availability === AVAL.booked)).map(r => (
         <RoomItem
                     key={r._id}
@@ -73,7 +65,7 @@ const RoomList = () => {
                 {auth.user.role === ROLE.staff && (
                     <h2>Launched Room</h2>
                 )}
-                <RoomAvalNum available={getAvalRoomNum()}/>
+                <RoomAvalNum available={avalRoomNum}/>
                 <ul className='room-list list-group list-group-flush' >
                     {publicRoomList} 
                 </ul>
