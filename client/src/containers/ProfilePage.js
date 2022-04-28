@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { fetchUserDetails, logout } from '../store/actions';
+import { ROLE } from '../constants';
 
 const Profile = ({history}) => {
     const userDetails = useSelector(state => state.userDetails);
@@ -32,11 +33,11 @@ const Profile = ({history}) => {
                         <h6 className='class-subtitle mb-2 text-muted'>Role: {userDetails.role}</h6> 
                         
                     </div>
-                    {userDetails.role === 'student' && (
+                    {userDetails.role === ROLE.student && (
                     <div className='card-body booked-list'>
                         <h6>Booked room:</h6>
                         <ul className='list-group text-center'>
-                            {userDetails.role === 'student' && userDetails.bookedRooms && userDetails.bookedRooms.map(r=>(
+                            {userDetails.role === ROLE.student && userDetails.bookedRooms && userDetails.bookedRooms.map(r=>(
                                 <li className='list-group-item' key={r._id}>
                                     <Link to={`/room/${r._id}`}>
                                         <h6>

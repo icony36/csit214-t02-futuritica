@@ -99,6 +99,17 @@ ul.nav.navbar-nav li a:hover{
     font-weight: bold;
 }
 
+.available-room {
+    width: 200px;
+    height: 40px;
+    border-radius: 5px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
 /* RoomNew */
 .form-control .react-date-picker__wrapper {
     border: none;
