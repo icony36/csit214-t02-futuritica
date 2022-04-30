@@ -36,8 +36,7 @@ exports.updateUser = async function(req, res, next){
         delete req.body.logInTime;
         delete req.body.logOutTime;
 
-         // update user details
-        // await db.User.findOneAndUpdate({_id: id}, {...req.body});
+        // update user details
         const user = await db.User.findById(id);
 
         Object.assign(user, req.body);

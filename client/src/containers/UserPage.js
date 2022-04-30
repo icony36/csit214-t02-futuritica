@@ -46,10 +46,10 @@ const UserPage = ({history}) => {
                     <ul className='list-group list-group-flush'>
                         <li className='list-group-item'>Email: {currentUser.email}</li>
                         <li className='list-group-item'>
-                            Last login: {currentUser.logInTime ? dayjs(currentUser.logInTime).format("DD MMMM YYYY HH:mm") : "Haven't logged in yet"}
+                            Last login: {currentUser.logInTime ? dayjs(currentUser.logInTime).format("DD MMMM YYYY HH:mm") : "Not logged in yet"}
                         </li>
                         <li className='list-group-item'>
-                            Last logout: {currentUser.logOutTime ? dayjs(currentUser.logOutTime).format("DD MMMM YYYY HH:mm") : "Haven't logged out yet"}
+                            Last logout: {currentUser.logOutTime ? dayjs(currentUser.logOutTime).format("DD MMMM YYYY HH:mm") : "Not logged out yet"}
                         </li>                     
                         {currentUser.role === ROLE.student && (
                         <div className='card-body booked-list'>
