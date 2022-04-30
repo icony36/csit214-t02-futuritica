@@ -23,7 +23,7 @@ exports.signup = async function(req, res, next){
                  id,
                  email,
                  username,
-                 role,
+                 role
             },
             token
          });
@@ -61,12 +61,17 @@ exports.signin = async function(req, res, next){
             // create token
             const token = jwt.sign({id, email, role}, process.env.SECRET_KEY);
 
+            // update login time
+            user.logInTime = new Date();
+            await user.save();
+
             return res.status(200).json({
                user:{
                     id,
                     email,
                     username,
                     role,
+                    logInTime: user.logInTime
                },
                token
             });
@@ -83,5 +88,22 @@ exports.signin = async function(req, res, next){
             status: 400,
             message: "Incorrect email or password."
         })
+    }
+}
+
+exports.logout = async function(req, res, next){
+    
+    const id = req.params.id;
+
+    try{
+        // update logout time
+        const user = await db.User.findByIdAndUpdate(id, {logOutTime: new Date()}, {useFindAndModify: false});
+
+        return res.status(200).json({logOutTime: user.logOutTime, message: `Successfully log out.`});
+    } catch(err){
+        return next({
+            status: 400,
+            message: err.message
+        });
     }
 }

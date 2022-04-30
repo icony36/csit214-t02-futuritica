@@ -13,22 +13,23 @@ const Navbar = () => {
                     Futuristica
                 </Link>
                 <ul className='nav navbar-nav navbar-right'>    
-                {auth.isAuthenticated ?(
+                {auth.isAuthenticated &&
                     <>
                         {auth.user.role === ROLE.staff && 
                         <li>
                             <Link to="/room/new">Create room</Link>
                         </li>
                         }
+                        {auth.user.role === ROLE.admin &&
+                         <li>
+                            <Link to="/signup">Create user</Link>
+                        </li>
+                        }
                         <li>
                             <Link to="/profile">Profile</Link>
                         </li>
                     </>
-                ) : (    
-                    <li>
-                        <Link to="/signin">Sign In</Link>
-                    </li>
-               )}
+                }
                </ul>
             </div>
         </nav>

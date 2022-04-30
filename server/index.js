@@ -8,6 +8,7 @@ const authRoutes = require("./routes/authRoutes");
 const staffRoutes = require("./routes/staffRoutes");
 const studentRoutes = require("./routes/studentRoutes");
 const commonRoutes = require("./routes/commonRoutes");
+const adminRoutes = require("./routes/adminRoutes");
 const {loginRequired, ensureCorrectRole} = require("./middleware/auth");
 
 const app = express();
@@ -32,6 +33,11 @@ app.use("/api/student",
 app.use("/api/common", 
     loginRequired,
     commonRoutes
+);
+app.use("/api/admin", 
+    loginRequired,
+    ensureCorrectRole("admin"),
+    adminRoutes
 );
 
 if (process.env.NODE_ENV === "production") {

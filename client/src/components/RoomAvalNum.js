@@ -16,8 +16,8 @@ const RoomAvalNum = ({available}) => {
     }
 
     return (
-        <div className='available-room'>
-            <span className={`roomitem-text-aval ${available > 0 ? "text-success" : "text-danger"}`}>{available > 0 ? available : null} {showText()}</span>
+        <div className='list-info'>
+            <span className={`${available > 0 ? "text-success" : "text-danger"}`}>{available > 0 ? available : null} {showText()}</span>
         </div>
     )
 

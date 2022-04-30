@@ -90,16 +90,26 @@ ul.nav.navbar-nav li a:hover{
     background-color: #00b4d8;
 }
 
-/* RoomItem */
-.roomitem-text {
-    margin-right: 1rem;
+/* ListItem */
+.listitem-text {
+    margin-right: 0.5rem;
 }
 
-.roomitem-text-aval {
+.listitem-text-bold {
     font-weight: bold;
 }
 
-.available-room {
+.listitem-text-italic{
+    font-style: italic;
+}
+
+.listitem-title {
+    font-weight: bold;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.list-info {
     width: 200px;
     height: 40px;
     border-radius: 5px;
@@ -107,7 +117,9 @@ ul.nav.navbar-nav li a:hover{
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-top: 20px;
     margin-bottom: 10px;
+    font-weight: bold;
 }
 
 /* RoomNew */

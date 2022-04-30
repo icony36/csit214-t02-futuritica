@@ -14,9 +14,9 @@ export const setAuthToken = token => {
 }
 
 
-export const authUser = (type, userData, history) => async dispatch => {
+export const signIn = (userData, history) => async dispatch => {
    try{
-        const res = await apiCall("post", `/api/auth/${type}`, userData);
+        const res = await apiCall("post", `/api/auth/signin`, userData);
 
         localStorage.setItem("jwtToken", res.token);
         setAuthToken(res.token);
@@ -30,7 +30,26 @@ export const authUser = (type, userData, history) => async dispatch => {
    }
 }
 
-export const logout = history => dispatch => {
+export const signUp = (userData, history) => async dispatch => {
+    try{
+         const res = await apiCall("post", `/api/auth/signup`, userData);
+         
+         console.log(res);
+         dispatch(removeError());
+ 
+         history.push('/');
+    } catch(err){
+         dispatch(addError(err));
+    }
+ }
+
+export const logout = history => async (dispatch, getState) => {
+    let { auth } = getState();
+
+    const id = auth.user.id;
+
+    const res = await apiCall("post", `/api/auth/logout/${id}`);
+    
     localStorage.clear();
     setAuthToken(false);
 

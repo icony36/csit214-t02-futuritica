@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { AVAL } from '../constants';
 
-const MessageItem = props => {
+const RoomItem = props => {
     const { id, availability, timestamp, capacity, price, bookedBy } = props;
 
     const date = dayjs(timestamp);
@@ -12,19 +12,19 @@ const MessageItem = props => {
         switch(availability){
             case AVAL.booked:
                 return (
-                    <span className='roomitem-text-aval text-danger'>
+                    <span className='listitem-text-bold text-danger'>
                         BOOKED
                     </span>
                 )
             case AVAL.public:
                 return (
-                    <span className='roomitem-text-aval text-success'>
+                    <span className='listitem-text-bold text-success'>
                         AVAILABLE
                     </span>
                 )
             case AVAL.private:
                 return (
-                    <span className='roomitem-text-aval text-warning'>
+                    <span className='listitem-text-bold text-warning'>
                         PRIVATE
                     </span>
                 )
@@ -34,10 +34,10 @@ const MessageItem = props => {
     return(
         <Link to={`/room/${id}`}>
                 <li className='list-group-item'>
-                    <span className='roomitem-text'>
+                    <span className='listitem-text'>
                         {date.format("DD MMMM YYYY")}              
                     </span>
-                    <span className='roomitem-text'>
+                    <span className='listitem-text'>
                         {date.format("HH:mm")}              
                     </span>
                     {renderAval()}
@@ -46,4 +46,4 @@ const MessageItem = props => {
     )   
 }
 
-export default MessageItem;
+export default RoomItem;

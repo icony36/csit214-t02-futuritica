@@ -37,26 +37,26 @@ const RoomList = () => {
    
     const publicRoomList = rooms.filter(r => (r.availability === AVAL.public || r.availability === AVAL.booked)).map(r => (
         <RoomItem
-                    key={r._id}
-                    id={r._id}
-                    availability={r.availability}
-                    timestamp={r.timestamp}
-                    capacity={r.capacity}
-                    price={r.price}
-                    bookedBy={r.bookedBy ? r.bookedBy.username : null}                
-                    />
+            key={r._id}
+            id={r._id}
+            availability={r.availability}
+            timestamp={r.timestamp}
+            capacity={r.capacity}
+            price={r.price}
+            bookedBy={r.bookedBy ? r.bookedBy.username : null}                
+        />
     ))
 
     const privateRoomList = rooms.filter(r => (r.availability === AVAL.private)).map(r => (
         <RoomItem
-                    key={r._id}
-                    id={r._id}
-                    availability={r.availability}
-                    timestamp={r.timestamp}
-                    capacity={r.capacity}
-                    price={r.price}
-                    bookedBy={r.bookedBy ? r.bookedBy.username : null}                
-                    />
+            key={r._id}
+            id={r._id}
+            availability={r.availability}
+            timestamp={r.timestamp}
+            capacity={r.capacity}
+            price={r.price}
+            bookedBy={r.bookedBy ? r.bookedBy.username : null}                
+        />
     ))
 
     return(

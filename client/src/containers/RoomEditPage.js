@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import DatePicker from 'react-date-picker'
-import dayjs from 'dayjs';
-import { fetchRooms, updateRoom, removeError } from '../store/actions';
+import { fetchRooms, updateRoom, removeError, deleteRoom } from '../store/actions';
 
 const RoomEditPage = ({history}) => {
     const errors = useSelector(state=>state.errors);
@@ -74,6 +73,10 @@ const RoomEditPage = ({history}) => {
         e.preventDefault();
     
         dispatch(updateRoom(roomEditData, id, history));
+    }
+
+    const handleDelete = () => {
+        dispatch(deleteRoom(id, history));
     }
 
     if(errors.message){
@@ -207,6 +210,7 @@ const RoomEditPage = ({history}) => {
 
                             <div className='card-body text-center'>
                                 <button type="submit" className='btn btn-primary'>Update</button>
+                                <button type='button' onClick={handleDelete} className='btn btn-danger btn-block' style={{ marginLeft: "0.5rem"}}>Delete Room</button>
                             </div>
                         </form>
                     </div>  

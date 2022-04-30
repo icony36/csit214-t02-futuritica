@@ -1,12 +1,14 @@
 import { combineReducers } from "redux";
+import adminReducer from "./adminReducer";
 import authReducer from "./authReducer";
 import errorReducer from "./errorReducer";
 import roomReducer from "./roomReducer";
-import userDeducer from "./userReducer";
+import profileReducer from "./profileReducer";
 
 export default combineReducers({
    auth: authReducer,
    errors: errorReducer ,
    rooms: roomReducer,
-   userDetails: userDeducer
+   profile: profileReducer,
+   users: adminReducer
 });

@@ -30,6 +30,11 @@ const roomSchema = new mongoose.Schema({
 
 // hook to delete room
 roomSchema.pre("remove", async function(next){
+    if(!this.bookedBy)
+    {
+        return next();
+    }
+    
     try{
         // find the user that owns this room
         const user = await User.findById(this.bookedBy);

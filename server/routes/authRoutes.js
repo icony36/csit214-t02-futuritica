@@ -1,8 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const {signup, signin} = require("../handlers/auth");
+const {logout, signin, signup} = require("../handlers/auth");
+const { loginRequired, ensureCorrectRole} = require("../middleware/auth");
 
-router.post("/signup", signup);
 router.post("/signin", signin);
+router.route("/logout/:id").post(loginRequired, logout);
+router.route("/signup").post(loginRequired, ensureCorrectRole("admin"), signup);
 
 module.exports = router;

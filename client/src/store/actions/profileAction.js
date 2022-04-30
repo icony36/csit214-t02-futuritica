@@ -1,13 +1,13 @@
 import { apiCall } from '../../services/api';
 import { addError, removeError } from './errorAction';
-import { LOAD_USER_DETAILS } from '../actionTypes';
+import { LOAD_PROFILE } from '../actionTypes';
 
-export const loadUserDetails = userDetails => ({
-    type: LOAD_USER_DETAILS,
-    userDetails
+export const loadProfile = profile => ({
+    type: LOAD_PROFILE,
+    profile
 })
 
-export const fetchUserDetails = () => async (dispatch, getState) => {
+export const fetchProfile = () => async (dispatch, getState) => {
     let { auth } = getState();
 
     const id = auth.user.id;
@@ -15,7 +15,7 @@ export const fetchUserDetails = () => async (dispatch, getState) => {
     try{
         const res = await apiCall("get", `/api/common/user/${id}`);
 
-        dispatch(loadUserDetails(res));
+        dispatch(loadProfile(res));
         dispatch(removeError());
    } catch(err){
         if(err){
@@ -27,14 +27,13 @@ export const fetchUserDetails = () => async (dispatch, getState) => {
    }
 }
 
-
-export const updateUser = user => async (dispatch, getState) => {
+export const updateProfile = profile => async (dispatch, getState) => {
     let { auth } = getState();
 
     const id = auth.user.id;
 
     try{
-        const res = await apiCall("put", `/api/common/user/${id}`, user);
+        const res = await apiCall("put", `/api/common/user/${id}`, profile);
 
         console.log(res);
     } catch(err){

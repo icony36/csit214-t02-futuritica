@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
+const db = require(".");
 
 const userSchema = new mongoose.Schema({
     email :{
@@ -13,7 +14,7 @@ const userSchema = new mongoose.Schema({
     },
     role: {
         type: String,
-        enum: ['staff', 'student'],
+        enum: ['staff', 'student', 'admin'],
         required: true,
     },
     username: {
@@ -24,7 +25,13 @@ const userSchema = new mongoose.Schema({
     bookedRooms: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Room"
-    }]
+    }],
+    logInTime: {
+        type: Date
+    },
+    logOutTime: {
+        type: Date
+    }
 })
 
 // hook to hash password before storing
@@ -50,6 +57,20 @@ userSchema.methods.comparePassword = async function(candidatePassword, next){
         return next(err);
     }
 }
+
+// hook to delete user
+userSchema.pre("remove", async function(next){
+    try{
+        console.log(db.Room);
+
+        // update room bookedBy and availabilitiy
+        await db.Room.updateMany({bookedBy: this.id}, {$set:{ availability: "public", bookedBy: null}});
+
+        return next();
+    } catch(err){
+        return next(err);
+    }
+})
 
 const User = mongoose.model("User", userSchema);
 

@@ -69,3 +69,15 @@ export const launchRoom = (availability, id) => async dispatch => {
         dispatch(addError(err));
     }  
 }
+
+export const deleteRoom = (id, history) => async dispatch => {
+    try{
+        const res = await apiCall("delete", `/api/staff/room/${id}`);
+
+        // window.location.reload();
+        history.push(`/`);
+        console.log(res);
+    } catch(err){
+        dispatch(addError(err));
+    }  
+}

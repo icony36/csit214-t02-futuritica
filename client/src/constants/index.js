@@ -1,6 +1,7 @@
 export const ROLE = Object.freeze({
     staff: 'staff',
-    student: 'student'
+    student: 'student',
+    admin: 'admin'
 });
 
 export const AVAL = Object.freeze({
