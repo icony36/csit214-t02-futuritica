@@ -4,7 +4,7 @@ const RoomAvalNum = ({available}) => {
 
     const showText = () => {
         if(available > 0){
-            if(available == 1){
+            if(available === 1){
                 return "Room is available";
             }
             else {

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
-import { fetchRooms, bookRoom, launchRoom, deleteRoom } from '../store/actions';
+import { fetchRooms, bookRoom, launchRoom } from '../store/actions';
 import Message from '../components/Message';
 import { ROLE, AVAL } from '../constants';
 

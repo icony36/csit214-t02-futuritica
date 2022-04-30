@@ -37,11 +37,22 @@ const userSchema = new mongoose.Schema({
 // hook to hash password before storing
 userSchema.pre("save", async function(next){
     try{
-        if(!this.isModified("password")){
+        if(this.isModified("password")){
+            const hashedPassword = await bcrypt.hash(this.password, 10);
+            this.password = hashedPassword;
+            
             return next();
         }
-        const hashedPassword = await bcrypt.hash(this.password, 10);
-        this.password = hashedPassword;
+
+        if(this.isModified("role")){
+            this.bookedRooms = [];
+            
+            // update room bookedBy and availabilitiy
+            await db.Room.updateMany({bookedBy: this.id}, {$set:{ availability: "public", bookedBy: null}});
+
+            return next();   
+        }
+
         return next();
     } catch(err){
         return next(err);

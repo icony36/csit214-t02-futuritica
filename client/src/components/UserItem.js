@@ -20,6 +20,8 @@ const UserItem = props => {
                         STUDENT
                     </span>
                 )
+            default:
+                return;
         }
     }
     

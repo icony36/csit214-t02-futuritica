@@ -32,12 +32,17 @@ exports.updateUser = async function(req, res, next){
     const id = req.params.id;
 
     try{
-         // prevent change of login and logout time
-         delete req.body.logInTime;
-         delete req.body.logOutTime;
-        
-        // update user details
-        await db.User.findByIdAndUpdate(id, {...req.body}, {useFindAndModify: false});
+        // prevent change of login and logout time
+        delete req.body.logInTime;
+        delete req.body.logOutTime;
+
+         // update user details
+        // await db.User.findOneAndUpdate({_id: id}, {...req.body});
+        const user = await db.User.findById(id);
+
+        Object.assign(user, req.body);
+
+        await user.save();
 
         return res.status(200).json({message: `User successfully updated.`});
     } catch(err){

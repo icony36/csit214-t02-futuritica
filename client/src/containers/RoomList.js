@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchRooms } from '../store/actions';
 import RoomItem from '../components/RoomItem';
@@ -40,10 +40,7 @@ const RoomList = () => {
             key={r._id}
             id={r._id}
             availability={r.availability}
-            timestamp={r.timestamp}
-            capacity={r.capacity}
-            price={r.price}
-            bookedBy={r.bookedBy ? r.bookedBy.username : null}                
+            timestamp={r.timestamp}      
         />
     ))
 
@@ -52,10 +49,7 @@ const RoomList = () => {
             key={r._id}
             id={r._id}
             availability={r.availability}
-            timestamp={r.timestamp}
-            capacity={r.capacity}
-            price={r.price}
-            bookedBy={r.bookedBy ? r.bookedBy.username : null}                
+            timestamp={r.timestamp}      
         />
     ))
 

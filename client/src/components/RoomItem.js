@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 import { AVAL } from '../constants';
 
 const RoomItem = props => {
-    const { id, availability, timestamp, capacity, price, bookedBy } = props;
+    const { id, availability, timestamp} = props;
 
     const date = dayjs(timestamp);
 
@@ -28,6 +28,8 @@ const RoomItem = props => {
                         PRIVATE
                     </span>
                 )
+            default:
+                return;
         }
     }
 

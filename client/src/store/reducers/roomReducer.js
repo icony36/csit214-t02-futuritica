@@ -1,4 +1,4 @@
-import { LOAD_ROOMS, REMOVE_ROOM } from "../actionTypes";
+import { LOAD_ROOMS } from "../actionTypes";
 
 export default (state=[], action) => {
     switch(action.type) {

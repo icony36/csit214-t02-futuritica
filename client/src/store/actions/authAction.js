@@ -50,6 +50,7 @@ export const logout = history => async (dispatch, getState) => {
 
     const res = await apiCall("post", `/api/auth/logout/${id}`);
     
+    console.log(res);
     localStorage.clear();
     setAuthToken(false);
 

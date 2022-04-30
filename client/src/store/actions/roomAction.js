@@ -1,5 +1,5 @@
 import { apiCall } from '../../services/api';
-import { LOAD_ROOMS, REMOVE_ROOM } from '../actionTypes';
+import { LOAD_ROOMS } from '../actionTypes';
 import { addError, removeError } from './errorAction';
 
 export const loadRooms = rooms => ({

@@ -21,6 +21,9 @@ const withAuth = (Component, type, allowedRole) => {
                     if( allowedRole && allowedRole !== props.auth.user.role){
                         props.history.push("/");
                     }
+                    break;
+                default:
+                    break;
             }
         }, []);
         
