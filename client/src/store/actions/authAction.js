@@ -13,7 +13,6 @@ export const setAuthToken = token => {
     setTokenHeader(token);
 }
 
-
 export const signIn = (userData, history) => async dispatch => {
    try{
         const res = await apiCall("post", `/api/auth/signin`, userData);
@@ -41,14 +40,14 @@ export const signUp = (userData, history) => async dispatch => {
     } catch(err){
          dispatch(addError(err));
     }
- }
+}
 
 export const logout = history => async (dispatch, getState) => {
     let { auth } = getState();
 
     const id = auth.user.id;
 
-    const res = await apiCall("post", `/api/auth/logout/${id}`);
+    const res = await apiCall("put", `/api/auth/logout/${id}`);
     
     console.log(res);
     localStorage.clear();

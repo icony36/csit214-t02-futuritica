@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
-const db = require(".");
+const Room = require("./room");
 
 const userSchema = new mongoose.Schema({
     email :{
@@ -48,7 +48,7 @@ userSchema.pre("save", async function(next){
             this.bookedRooms = [];
             
             // update room bookedBy and availabilitiy
-            await db.Room.updateMany({bookedBy: this.id}, {$set:{ availability: "public", bookedBy: null}});
+            await Room.updateMany({bookedBy: this.id}, {$set:{ availability: "public", bookedBy: null}});
 
             return next();   
         }
@@ -63,6 +63,7 @@ userSchema.pre("save", async function(next){
 userSchema.methods.comparePassword = async function(candidatePassword, next){
     try {
         const isMatch = await bcrypt.compare(candidatePassword, this.password);
+        
         return isMatch;
     } catch(err){
         return next(err);
@@ -72,10 +73,8 @@ userSchema.methods.comparePassword = async function(candidatePassword, next){
 // hook to delete user
 userSchema.pre("remove", async function(next){
     try{
-        console.log(db.Room);
-
         // update room bookedBy and availabilitiy
-        await db.Room.updateMany({bookedBy: this.id}, {$set:{ availability: "public", bookedBy: null}});
+        await Room.updateMany({bookedBy: this.id}, {$set:{ availability: "public", bookedBy: null}});
 
         return next();
     } catch(err){
