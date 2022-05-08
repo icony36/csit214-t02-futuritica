@@ -35,7 +35,7 @@ const UserList = () => {
           return a.logInTime < b.logInTime ? 1 : -1;
     }
 
-    users.sort(compare); // sort room based on timestamp
+    users.sort(compare); // sort users based on timestamp
    
     const staffList = users.filter(u => (u.role === ROLE.staff )).map(u => (
         <UserItem

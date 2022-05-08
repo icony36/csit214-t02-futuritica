@@ -34,7 +34,7 @@ const userSchema = new mongoose.Schema({
     }
 })
 
-// hook to hash password before storing
+// hook to hash password before storing and changing role
 userSchema.pre("save", async function(next){
     try{
         if(this.isModified("password")){
@@ -63,7 +63,7 @@ userSchema.pre("save", async function(next){
 userSchema.methods.comparePassword = async function(candidatePassword, next){
     try {
         const isMatch = await bcrypt.compare(candidatePassword, this.password);
-        
+
         return isMatch;
     } catch(err){
         return next(err);
