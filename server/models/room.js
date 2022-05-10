@@ -2,11 +2,6 @@ const mongoose = require("mongoose");
 const User = require("./user");
 
 const roomSchema = new mongoose.Schema({
-    roomName: {
-        type: String,
-        required: true,
-        default: "No name"
-    },
     availability: {
         type: String,
         enum: ['private', 'public', 'booked'],
