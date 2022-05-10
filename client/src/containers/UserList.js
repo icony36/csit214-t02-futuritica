@@ -37,7 +37,7 @@ const UserList = () => {
 
     users.sort(compare); // sort users based on timestamp
    
-    const staffList = users.filter(u => (u.role === ROLE.staff )).map(u => (
+    const staffList = users.filter(u => (u.role === ROLE.staff && !u.isSuspended )).map(u => (
         <UserItem
             key={u._id}    
             id={u._id} 
@@ -47,7 +47,17 @@ const UserList = () => {
         />
     ))
 
-    const studentList = users.filter(u => (u.role === ROLE.student)).map(u => (
+    const studentList = users.filter(u => (u.role === ROLE.student && !u.isSuspended )).map(u => (
+        <UserItem 
+            key={u._id}
+            id={u._id}     
+            username={u.username} 
+            role={u.role} 
+            lastLogin={u.logInTime} 
+        />
+    ))
+
+    const suspendedList = users.filter(u => (u.isSuspended)).map(u => (
         <UserItem 
             key={u._id}
             id={u._id}     
@@ -71,6 +81,12 @@ const UserList = () => {
                 </div>
                 <ul className='room-list list-group list-group-flush' >
                     {studentList}
+                </ul>
+                <div className='list-info'>
+                    <span className="text-danger">Suspended account: {suspendedList.length}</span>
+                </div>
+                <ul className='room-list list-group list-group-flush' >
+                    {suspendedList}
                 </ul>
             </div>
         </div>

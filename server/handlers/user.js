@@ -17,7 +17,7 @@ exports.getUser = async function(req, res, next){
 
 exports.getUsers = async function(req, res, next){
     try{
-        const user = await db.User.find({}).populate('bookedRooms');
+        const user = await  db.User.find({}).populate('bookedRooms');
 
         return res.status(200).json(user);
     } catch(err){
@@ -69,3 +69,19 @@ exports.deleteUser = async function(req, res, next){
     }
 };
 
+exports.suspendUser = async function(req, res, next){
+    try{
+        const id = req.params.id;
+
+        const user = await db.User.findById(id);
+        user.isSuspended = req.body.isSuspended;
+        await user.save();
+
+        return res.status(200).json({message: `User ${id} ${req.body.isSuspended ? "suspended" : "unsuspended"}!`});
+    } catch(err){
+        return next({
+            status: 400,
+            message: err.message
+        });
+    }
+};

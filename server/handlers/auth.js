@@ -54,10 +54,17 @@ exports.signin = async function(req, res, next){
         const user = await db.User.findOne({
             email: req.body.email
         });
-        const {id, email, username, role} = user;
+        const {id, email, username, role, isSuspended} = user;
 
         const isMatch = await user.comparePassword(req.body.password);
         if(isMatch){
+            if(isSuspended){
+                return next({
+                    status: 400,
+                    message: "This account has been suspended."
+                })
+            }
+
             // create token
             const token = jwt.sign({id, email, role}, process.env.SECRET_KEY);
 

@@ -46,3 +46,14 @@ export const deleteUser = (id, history) => async dispatch => {
         dispatch(addError(err));
     }  
 }
+
+export const suspendUser = (id, obj) => async dispatch => {
+    try{    
+        const res = await apiCall("patch", `/api/admin/users/${id}`, obj);
+
+        window.location.reload();
+        console.log(res);
+    } catch(err){
+        dispatch(addError(err));
+    }  
+}

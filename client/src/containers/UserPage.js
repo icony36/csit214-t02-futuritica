@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
-import { fetchUsers, deleteUser } from '../store/actions';
+import { fetchUsers, suspendUser } from '../store/actions';
 import Message from '../components/Message';
 import { ROLE } from '../constants';
 
@@ -24,9 +24,14 @@ const UserPage = ({history}) => {
         fetchData();
      },[]);
 
-    const handleDelete = () => {
-        dispatch(deleteUser(id, history));
+    const handleSuspend = () => {
+        dispatch(suspendUser(id, {isSuspended: true}));
     }
+
+    const handleUnsuspend = () => {
+        dispatch(suspendUser(id, {isSuspended: false}));
+    }
+     
      
     return(
     <div className='row justify-content-md-center'>
@@ -74,7 +79,11 @@ const UserPage = ({history}) => {
                                 Edit
                             </button>
                         </Link>
-                        <button onClick={handleDelete} className='btn btn-danger btn-block'>Delete User</button>
+                        { currentUser.isSuspended ? (
+                        <button onClick={handleUnsuspend} className='btn btn-success btn-block'>Unsuspend User</button>
+                        ) : (
+                        <button onClick={handleSuspend} className='btn btn-danger btn-block'>Suspend User</button>
+                        )}
                     </div>
                 </div>
             </>

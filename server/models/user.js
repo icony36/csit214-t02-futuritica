@@ -31,6 +31,10 @@ const userSchema = new mongoose.Schema({
     },
     logOutTime: {
         type: Date
+    },
+    isSuspended: {
+        type: Boolean,
+        default: false
     }
 })
 
@@ -44,7 +48,7 @@ userSchema.pre("save", async function(next){
             return next();
         }
 
-        if(this.isModified("role")){
+        if(this.isModified("role") || this.isModified("isSuspended")){
             this.bookedRooms = [];
             
             // update room bookedBy and availabilitiy
