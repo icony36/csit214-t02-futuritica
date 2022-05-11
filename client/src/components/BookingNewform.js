@@ -2,7 +2,7 @@ import React from "react";
 import DatePicker from 'react-date-picker';
 
 
-const BookingNewForm = ({setIsPaymentPage, currentRoom, handleDate, handleHours, bookData}) => {
+const BookingNewForm = ({handlePaymentPage, currentRoom, handleDate, handleHours, bookData}) => {
     return(
         <>        
             <label htmlFor='timestamp'>Date:</label>
@@ -75,7 +75,7 @@ const BookingNewForm = ({setIsPaymentPage, currentRoom, handleDate, handleHours,
             </span>
 
             <div className='card-body text-center'>
-                <button onClick={()=>setIsPaymentPage(true)} className='btn btn-primary'>Proceed To Payment</button>
+                <button onClick={handlePaymentPage} className='btn btn-primary'>Proceed To Payment</button>
             </div>
         </>
     )   

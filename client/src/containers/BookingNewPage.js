@@ -34,10 +34,6 @@ const BookingNewPage = () => {
         fetchData();
      },[]);
 
-    useEffect(()=>{
-        dispatch(removeError());
-     },[isPaymentPage]);
-
     const handleDate = date => {
         date.setHours(8, 0, 0, 0);
         
@@ -63,9 +59,15 @@ const BookingNewPage = () => {
 
     const handleBook = e => {
         e.preventDefault();
+
+        dispatch(removeError());
             
         dispatch(bookRoom(bookData, BOOKING.book, id, history));
-        setIsPaymentPage(false);
+    }
+
+    const handlePaymentPage = () => {
+        dispatch(removeError());
+        setIsPaymentPage(true);
     }
 
     if(errors.message){
@@ -105,7 +107,7 @@ const BookingNewPage = () => {
                                 </>
                                 ) : ( 
                                 <>
-                                    <BookingNewForm setIsPaymentPage={setIsPaymentPage} currentRoom={currentRoom} bookData={bookData} handleDate={handleDate} handleHours={handleHours}/>
+                                    <BookingNewForm handlePaymentPage={handlePaymentPage} currentRoom={currentRoom} bookData={bookData} handleDate={handleDate} handleHours={handleHours}/>
                                    
                                 </>   
                                 )}
