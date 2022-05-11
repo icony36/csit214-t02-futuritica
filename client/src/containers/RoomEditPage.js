@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import DatePicker from 'react-date-picker'
 import { fetchRooms, updateRoom, removeError, deleteRoom } from '../store/actions';
 
 const RoomEditPage = ({history}) => {
@@ -13,11 +12,8 @@ const RoomEditPage = ({history}) => {
 
     const currentRoom = rooms.filter(r => r._id === id)[0];
 
-    const currentDate = new Date();
-    currentDate.setHours(8, 0, 0, 0);
-
     const initState = {
-        timestamp: currentRoom ? new Date(currentRoom.timestamp) : currentDate,
+        name: currentRoom ? currentRoom.name : "",
         capacity: currentRoom ? currentRoom.capacity : 0,
         price: currentRoom ? currentRoom.price : 0,
         promotionCode: currentRoom ? currentRoom.promotionCode : "",
@@ -42,29 +38,6 @@ const RoomEditPage = ({history}) => {
             {
                 ...prevState,
                 [e.target.name]: e.target.value
-            }
-        ))
-    }
-
-    const handleDate = date => {
-        date.setHours(8, 0, 0, 0);
-        
-        setRoomEditData(prevState => (
-            {
-                ...prevState,
-                timestamp: date
-            }
-        ))
-    }
-
-    const handleHours = e => {
-        const date = roomEditData.timestamp;
-        date.setHours(e.target.value)
-        
-        setRoomEditData(prevState => (
-            {
-                ...prevState,
-                timestamp: date
             }
         ))
     }
@@ -98,74 +71,16 @@ const RoomEditPage = ({history}) => {
                     <div className='card'>
                         <form onSubmit={handleSubmit}>                            
                             <div className='card-body'>  
-                                <label htmlFor='timestamp'>Date:</label>
-                                <div className='form-group'>
-                                    <DatePicker 
-                                    className={'form-control'} 
-                                    format={'dd-MM-y'} 
-                                    minDate={new Date()} 
-                                    clearIcon={null} 
-                                    onChange={handleDate} 
-                                    value={roomEditData.timestamp}
-                                    />
-                                </div>
-
-                                <label htmlFor='timestamp'>Timeslot:</label>
-                                    <span>
-                                    <select 
+                                <label htmlFor='name'>Room Name:</label>
+                                    <input 
                                         className='form-control' 
-                                        id='timestamp-hours' 
-                                        name='timestamp-hours' 
-                                        onChange={handleHours} 
-                                        value={roomEditData.timestamp.getHours()}                        
-                                    >
-                                        <option value={8}>
-                                            08:00
-                                        </option>
-                                        <option value={9}>
-                                            09:00
-                                        </option>
-                                        <option value={10}>
-                                            10:00
-                                        </option>
-                                        <option value={11}>
-                                            11:00
-                                        </option>
-                                        <option value={12}>
-                                            12:00
-                                        </option>
-                                        <option value={13}>
-                                            13:00
-                                        </option>
-                                        <option value={14}>
-                                            14:00
-                                        </option>
-                                        <option value={15}>
-                                            15:00
-                                        </option>
-                                        <option value={16}>
-                                            16:00
-                                        </option>
-                                        <option value={17}>
-                                            17:00
-                                        </option>
-                                        <option value={18}>
-                                            18:00
-                                        </option>
-                                        <option value={19}>
-                                            19:00
-                                        </option>
-                                        <option value={20}>
-                                            20:00
-                                        </option>
-                                        <option value={21}>
-                                            21:00
-                                        </option>
-                                        <option value={22}>
-                                            22:00
-                                        </option>
-                                    </select>
-                                </span>
+                                        id='name' 
+                                        name='name' 
+                                        onChange={handleChange} 
+                                        value={roomEditData.name} 
+                                        type="text" 
+                                    />  
+                                
 
                                 <label htmlFor='capacity'>Capacity:</label> 
                                 <select 
@@ -197,7 +112,7 @@ const RoomEditPage = ({history}) => {
                                     onKeyPress={(e) => !/[0-9]/.test(e.key) && e.preventDefault()}
                                 />
 
-                                <label htmlFor='promotionCode'>PromotionCode:</label>
+                                <label htmlFor='promotionCode'>Promotion Code:</label>
                                 <input 
                                     className='form-control' 
                                     id='promotionCode' 

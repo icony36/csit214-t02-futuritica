@@ -15,3 +15,8 @@ export const PAGE_TYPES = Object.freeze({
     private: 'private',
     role: 'role'
 })
+
+export const BOOKING = Object.freeze({
+    book: 'book',
+    unbook: 'unbook',
+})

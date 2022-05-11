@@ -9,3 +9,5 @@ export const REMOVE_ROOM = "LOAD_ROOM";
 export const LOAD_PROFILE = "LOAD_PROFILE";
 
 export const LOAD_USERS = "LOAD_USERS";
+
+export const LOAD_BOOKING = "LOAD_BOOKING";

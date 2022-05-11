@@ -48,12 +48,12 @@ export const updateRoom = (room, id, history) => async dispatch => {
     }  
 }
 
-export const bookRoom = (availability, id) => async dispatch => {
+export const bookRoom = (bookData, bookType, id, history) => async dispatch => {
     try{
-        const res = await apiCall("put", `/api/student/booking/${id}`, {availability});
+        const res = await apiCall("patch", `/api/student/booking/${id}`, {bookData, bookType});
 
-        window.location.reload();
         console.log(res);
+        history.push(`/profile`);
     } catch(err){
         dispatch(addError(err));
     }  

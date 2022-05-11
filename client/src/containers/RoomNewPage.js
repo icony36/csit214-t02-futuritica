@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import DatePicker from 'react-date-picker';
 import { postNewRoom, removeError } from '../store/actions';
 import { AVAL } from '../constants';
 
@@ -13,7 +12,7 @@ const RoomNewPage = ({history}) => {
     currentDate.setHours(8, 0, 0, 0);
 
     const defaultRoomData = {
-        timestamp: currentDate,
+        name: "",
         availability: "",
         capacity: 1,
         price: 0,
@@ -30,41 +29,6 @@ const RoomNewPage = ({history}) => {
             }
         ))
     }
-
-    const handleDate = date => {
-        date.setHours(8, 0, 0, 0);
-        
-        setRoomData(prevState => (
-            {
-                ...prevState,
-                timestamp: date
-            }
-        ))
-    }
-
-    const handleHours = e => {
-        const date = roomData.timestamp;
-        date.setHours(e.target.value)
-        
-        setRoomData(prevState => (
-            {
-                ...prevState,
-                timestamp: date
-            }
-        ))
-    }
-
-    // const handleMinutes = e => {
-    //     const date = roomData.timestamp;
-    //     date.setMinutes(e.target.value)
-
-    //     setRoomData(prevState => (
-    //         {
-    //             ...prevState,
-    //             timestamp: date
-    //         }
-    //     ))
-    // }
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -96,7 +60,7 @@ const RoomNewPage = ({history}) => {
                                 </div>
                             }
                             
-                            <label htmlFor='timestamp'>Date (required):</label>
+                            {/* <label htmlFor='timestamp'>Date (required):</label>
                             <div className='form-group'>
                                 <DatePicker className={'form-control'} format={'dd-MM-y'} minDate={new Date()} clearIcon={null} onChange={handleDate} value={roomData.timestamp} />
                             </div>
@@ -156,23 +120,18 @@ const RoomNewPage = ({history}) => {
                                         22:00
                                     </option>
                                 </select>
-                            </span>
-                            {/* <span>
-                                <select 
-                                    className='form-control' 
-                                    id='timestamp-minutes' 
-                                    name='timestamp-minutes' 
-                                    onChange={handleMinutes} 
-                                    value={roomData.timestamp.getMinutes()}
-                                >
-                                    <option value={0}>
-                                        00
-                                    </option>
-                                    <option value={30}>
-                                        30
-                                    </option>
-                                </select>                    
                             </span> */}
+
+                            <label htmlFor='price'>Room Name (required):</label>
+                            <input 
+                                className='form-control' 
+                                id='name' 
+                                name='name' 
+                                onChange={handleChange} 
+                                value={roomData.name} 
+                                type='text'
+                            />
+                         
 
                             <label htmlFor='capacity'>Capacity (required):</label> 
                             <select 
@@ -203,7 +162,7 @@ const RoomNewPage = ({history}) => {
                                 onKeyPress={(e) => !/[0-9]/.test(e.key) && e.preventDefault()} 
                             />
 
-                            <label htmlFor='promotionCode'>PromotionCode:</label>
+                            <label htmlFor='promotionCode'>Promotion Code:</label>
                             <input 
                                 className='form-control' 
                                 id='promotionCode' 

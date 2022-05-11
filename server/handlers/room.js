@@ -1,23 +1,14 @@
 const db = require("../models");
-const jwt = require("jsonwebtoken");
-
-const getUserIDFromToken = req => {  
-    const authHeader = req.headers.authorization || req.headers.Authorization;
-    const token = authHeader.split(" ")[1];
-    
-    const decoded = jwt.verify(token, process.env.SECRET_KEY); 
-
-    if(decoded){
-        return decoded.id;
-    }
-    else {
-        return null;
-    }
-}
 
 exports.getRooms = async function(req, res, next){
     try{
-        const rooms = await db.Room.find({}).populate('bookedBy');
+        const rooms = await db.Room.find({}).populate({
+            path: 'booking',
+            populate:{
+                path: 'user',
+                model: 'User'
+            }
+        });
 
         return res.status(200).json(rooms);
     } catch(err){
@@ -32,7 +23,7 @@ exports.getRoom = async function(req, res, next){
     const id = req.params.id;
     
     try{
-        const room = await db.Room.findById(id).populate('bookedBy');
+        const room = await db.Room.findById(id).populate('booking');
 
         return res.status(200).json(room);
     } catch(err){
@@ -44,9 +35,9 @@ exports.getRoom = async function(req, res, next){
 };
 
 exports.createRoom = async function(req, res, next){
-    const {availability, timestamp, capacity, price, promotionCode} = req.body;
+    const {availability, name, capacity, price, promotionCode} = req.body;
     
-    if (!availability || !timestamp || !capacity ) {
+    if (!availability || !name || !capacity ) {
 
         return next({
             status: 422,
@@ -57,7 +48,7 @@ exports.createRoom = async function(req, res, next){
     try{
         const room = await db.Room.create({
             availability,
-            timestamp,
+            name,
             capacity,
             price,
             promotionCode,
@@ -65,11 +56,11 @@ exports.createRoom = async function(req, res, next){
 
         return res.status(200).json(room);
     } catch(err){
-        // if validation fail
-        if(err.code === 11000){
-            err.message = "Sorry, the timeslot is already used.";
+         // if validation fail
+         if(err.code === 11000){
+            err.message = "Sorry, the room name is used.";
         }
-        
+
         return next({
             status: 400,
             message: err.message
@@ -81,8 +72,8 @@ exports.updateRoom = async function(req, res, next){
     const id = req.params.id;
 
     try{
-        // prevent change of bookedBy
-        delete req.body.bookedBy;
+        // prevent change of booking
+        delete req.body.booking;
 
         // update room details
         await db.Room.findByIdAndUpdate(id, {...req.body}, {useFindAndModify: false});
@@ -91,7 +82,7 @@ exports.updateRoom = async function(req, res, next){
     } catch(err){
          // if validation fail
          if(err.code === 11000){
-            err.message = "Sorry, the timeslot is already used.";
+            err.message = "Sorry, the room name is already used.";
         }
 
         return next({
@@ -124,7 +115,7 @@ exports.launchRoom = async function(req, res, next){
 
         // update room data
         room.availability = availability;
-        room.bookedBy = null;
+        room.booking = null;
         await room.save();
        
         switch(availability){
@@ -133,87 +124,6 @@ exports.launchRoom = async function(req, res, next){
             case 'public':
                 return res.status(200).json({message: `Room successfully launched.`});
         }
-    } catch(err){
-        return next({
-            status: 400,
-            message: err.message
-        });
-    }
-};
-
-exports.bookRoom = async function(req, res, next){
-    const id = req.params.id;
-    const {availability} = req.body;
-
-    const bookedBy = getUserIDFromToken(req);
-
-    if (!bookedBy || !availability ) {
-
-        return next({
-            status: 422,
-            message: "Invalid booking."
-        });
-    }
-
-    try{
-        const room = await db.Room.findById(id);
-        const user = await db.User.findById(bookedBy);
-
-        if(room.availability == "private"){
-            return next({
-                status: 422,
-                message: "This room is not yet launched."
-            });
-        }
-
-        switch(availability){
-            case "booked":
-                if(!room.bookedBy){
-                    // update room data
-                    await db.Room.findByIdAndUpdate(id, {availability, bookedBy}, {useFindAndModify: false});
-
-                    // update user booked rooms list                    
-                    user.bookedRooms.push(id);
-                    await user.save();
-
-                    return res.status(200).json({message: `Room successfully booked.`});
-                }
-                else {
-                    return next({
-                        status: 422,
-                        message: "This room is already booked."
-                    });
-                }        
-            case "public":
-                if(room.bookedBy){
-                    if(room.bookedBy !=  bookedBy){
-                        return next({
-                            status: 422,
-                            message: "This room is not your room."
-                        });
-                    }
-
-                    // update room owner user id
-                    await db.Room.findByIdAndUpdate(id, {availability, bookedBy: null}, {useFindAndModify: false});
-
-                    // update user booked rooms list                    
-                    user.bookedRooms.remove(id);
-                    await user.save();
-
-                    return res.status(200).json({message: `Rome booking cancel!`});
-                }
-                else {
-                    return next({
-                        status: 422,
-                        message: "This room is not yet booked."
-                    });
-                }
-            default:
-                return next({
-                    status: 422,
-                    message: "Invalid booking."
-                });      
-        }                         
     } catch(err){
         return next({
             status: 400,

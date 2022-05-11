@@ -35,14 +35,15 @@ const Profile = ({history}) => {
                     </div>
                     {profile.role === ROLE.student && (
                     <div className='card-body booked-list'>
-                        <h6>Booked room:</h6>
+                        <h6>Booking:</h6>
                         <ul className='list-group text-center'>
-                            {profile.bookedRooms && profile.bookedRooms.map(r=>(
-                                <li className='list-group-item' key={r._id}>
-                                    <Link to={`/room/${r._id}`}>
-                                        <h6>
-                                            {dayjs(r.timestamp).format("DD-MMMM-YYYY HH:mm")}
-                                        </h6>
+                            {profile.booking && profile.booking.map(b=>(
+                                <li className='list-group-item' key={b._id}>
+                                    <Link to={`/booking/${b._id}`}>
+                                        <p className='fw-bold'>Room {b.room.name}</p>         
+                                        <p className='fw-normal'>
+                                            {dayjs(b.timestamp).format("DD-MMMM-YYYY HH:mm")}
+                                        </p>
                                     </Link>
                                 </li>
                             ))}
@@ -53,9 +54,7 @@ const Profile = ({history}) => {
                         <button onClick={handleLogout} className='btn btn-danger btn-block'>Logout</button>
                     </div>
                 </div>
-             </div>
-             
-            
+             </div>            
         </div>
     )
 }

@@ -1,12 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import dayjs from 'dayjs';
 import { AVAL } from '../constants';
 
 const RoomItem = props => {
-    const { id, availability, timestamp} = props;
-
-    const date = dayjs(timestamp);
+    const { id, availability, name} = props;
 
     const renderAval = () => {
         switch(availability){
@@ -36,11 +33,8 @@ const RoomItem = props => {
     return(
         <Link to={`/room/${id}`}>
                 <li className='list-group-item'>
-                    <span className='listitem-text'>
-                        {date.format("DD MMMM YYYY")}              
-                    </span>
-                    <span className='listitem-text'>
-                        {date.format("HH:mm")}              
+                    <span className='listitem-text-bold' style={{marginRight: '1rem'}}>
+                        Room {name}  
                     </span>
                     {renderAval()}
                 </li>

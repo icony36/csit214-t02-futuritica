@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
-const Room = require("./room");
 
 const userSchema = new mongoose.Schema({
     email :{
@@ -22,10 +21,12 @@ const userSchema = new mongoose.Schema({
         required: true,
         default: "Anonymous"
     },
-    bookedRooms: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Room"
-    }],
+    booking:  [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Booking"
+        }
+    ],
     logInTime: {
         type: Date
     },
@@ -49,10 +50,10 @@ userSchema.pre("save", async function(next){
         }
 
         if(this.isModified("role") || this.isModified("isSuspended")){
-            this.bookedRooms = [];
+            this.booking = [];
             
-            // update room bookedBy and availabilitiy
-            await Room.updateMany({bookedBy: this.id}, {$set:{ availability: "public", bookedBy: null}});
+             // Delete all the Booking with this user
+            await mongoose.model('Booking').deleteMany({user: this.id});
 
             return next();   
         }
@@ -77,8 +78,8 @@ userSchema.methods.comparePassword = async function(candidatePassword, next){
 // hook to delete user
 userSchema.pre("remove", async function(next){
     try{
-        // update room bookedBy and availabilitiy
-        await Room.updateMany({bookedBy: this.id}, {$set:{ availability: "public", bookedBy: null}});
+       // Delete all the Booking with this user
+       await mongoose.model('Booking').deleteMany({user: this.id});
 
         return next();
     } catch(err){

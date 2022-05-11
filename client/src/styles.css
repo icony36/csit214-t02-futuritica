@@ -2,6 +2,10 @@ body {
     background-color: #ebe8e2;
 }
 
+p {
+    margin-bottom: 0;
+}
+
 /* Navbar */
 .navbar {
     margin-bottom: 1rem;

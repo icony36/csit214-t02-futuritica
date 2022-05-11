@@ -10,3 +10,4 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost:27017/csit214",
 
 module.exports.User = require("./user");
 module.exports.Room = require("./room");
+module.exports.Booking = require("./booking");

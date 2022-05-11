@@ -1,16 +1,15 @@
 const mongoose = require("mongoose");
-const User = require("./user");
 
 const roomSchema = new mongoose.Schema({
-    availability: {
+    name: {
         type: String,
-        enum: ['private', 'public', 'booked'],
-        default: 'private'
-    },
-    timestamp: {
-        type: Date,
         required: true,
         unique: true
+    },
+    availability: {
+        type: String,
+        enum: ['private', 'public'],
+        default: 'private'
     },
     capacity: {
         type: Number,
@@ -23,25 +22,19 @@ const roomSchema = new mongoose.Schema({
     promotionCode: {
         type: String
     },
-    bookedBy: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
-    }
+    booking: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Booking"
+        }
+    ]
 })
 
 // hook to delete room
 roomSchema.pre("remove", async function(next){
-    if(!this.bookedBy)
-    {
-        return next();
-    }
-    
     try{
-        // find the user that owns this room
-        const user = await User.findById(this.bookedBy);
-        // remove room from the user booked rooms list
-        user.bookedRooms.remove(this.id);
-        await user.save();
+        // Delete all the Booking with this room
+        await mongoose.model('Booking').deleteMany({room: this.id});
 
         return next();
     } catch(err){

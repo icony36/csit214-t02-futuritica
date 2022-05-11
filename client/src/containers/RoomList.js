@@ -21,26 +21,14 @@ const RoomList = () => {
        
     },[]);
 
-    const compare = (a, b) => {        
-        if ( a.timestamp < b.timestamp ){
-          return -1;
-        }
-        if ( a.timestamp > b.timestamp ){
-          return 1;
-        }
-        return 0;
-    }
-
-    rooms.sort(compare); // sort room based on timestamp
-
-    const avalRoomNum = rooms.filter(r => (r.availability === AVAL.public)).length;
+    rooms.sort((a, b) => a.name.localeCompare(b.name))
    
-    const publicRoomList = rooms.filter(r => (r.availability === AVAL.public || r.availability === AVAL.booked)).map(r => (
+    const publicRoomList = rooms.filter(r => (r.availability === AVAL.public)).map(r => (
         <RoomItem
             key={r._id}
             id={r._id}
-            availability={r.availability}
-            timestamp={r.timestamp}      
+            availability={r.availability}    
+            name={r.name}
         />
     ))
 
@@ -49,7 +37,7 @@ const RoomList = () => {
             key={r._id}
             id={r._id}
             availability={r.availability}
-            timestamp={r.timestamp}      
+            name={r.name}    
         />
     ))
 
@@ -59,7 +47,7 @@ const RoomList = () => {
                 {auth.user.role === ROLE.staff && (
                     <h2>Launched Room</h2>
                 )}
-                <RoomAvalNum available={avalRoomNum}/>
+                <RoomAvalNum available={publicRoomList.length}/>
                 <ul className='room-list list-group list-group-flush' >
                     {publicRoomList} 
                 </ul>

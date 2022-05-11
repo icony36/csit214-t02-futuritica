@@ -11,6 +11,9 @@ import RoomEditPage from './RoomEditPage';
 import RoomPage from './RoomPage';
 import UserPage from './UserPage';
 import UserEditPage from './UserEditPage';
+import BookingNewPage from './BookingNewPage';
+import BookingPage from './BookingPage';
+import BookingEditPage from './BookingEditPage';
 import withAuth from "../hocs/withAuth";
 import { ROLE, PAGE_TYPES } from "../constants";
 
@@ -28,6 +31,9 @@ const App = () => {
                     <Route exact path="/profile" component={withAuth(ProfilePage, PAGE_TYPES.private)}/>
                     <Route exact path="/room/new" component={withAuth(RoomNewPage, PAGE_TYPES.role,ROLE.staff)}/>
                     <Route exact path="/room/:id" component={withAuth(RoomPage, PAGE_TYPES.private)}/>
+                    <Route exact path="/room/:id/booking" component={withAuth(BookingNewPage, PAGE_TYPES.role, ROLE.student)}/>
+                    <Route exact path="/booking/:id/" component={withAuth(BookingPage, PAGE_TYPES.role, ROLE.student)}/>
+                    <Route exact path="/booking/:id/edit" component={withAuth(BookingEditPage, PAGE_TYPES.role, ROLE.student)}/>
                     <Route exact path="/room/:id/edit" component={withAuth(RoomEditPage, PAGE_TYPES.role,ROLE.staff)}/>
                     <Route exact path="/user/:id/" component={withAuth(UserPage, PAGE_TYPES.role, ROLE.admin)}/>
                     <Route exact path="/user/:id/edit" component={withAuth(UserEditPage, PAGE_TYPES.role,ROLE.admin)}/>

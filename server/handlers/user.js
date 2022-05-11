@@ -4,7 +4,13 @@ exports.getUser = async function(req, res, next){
     try{
         const id = req.params.id;
         
-        const user = await db.User.findById(id).populate('bookedRooms');
+        const user = await db.User.findById(id).populate({
+            path: 'booking',
+            populate:{
+                path: 'room',
+                model: 'Room'
+            }
+        });
 
         return res.status(200).json(user);
     } catch(err){
@@ -17,7 +23,7 @@ exports.getUser = async function(req, res, next){
 
 exports.getUsers = async function(req, res, next){
     try{
-        const user = await  db.User.find({}).populate('bookedRooms');
+        const user = await  db.User.find({}).populate('booking');
 
         return res.status(200).json(user);
     } catch(err){
