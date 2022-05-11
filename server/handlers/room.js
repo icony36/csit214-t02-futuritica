@@ -105,18 +105,12 @@ exports.launchRoom = async function(req, res, next){
     }
 
     try{
-        const room = await db.Room.findById(id);
+        // update room
+        await db.Room.findByIdAndUpdate(id, {availability, booking:[]});
 
-        // remove room from user booked list
-        await db.User.updateMany(
-            {},
-            {$pull: {'bookedRooms': id}}
-        )        
 
-        // update room data
-        room.availability = availability;
-        room.booking = null;
-        await room.save();
+        // delete all the Booking with this user
+        await db.Booking.deleteMany({room: id});
        
         switch(availability){
             case 'private':

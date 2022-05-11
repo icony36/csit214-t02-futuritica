@@ -67,10 +67,15 @@ bookingSchema.pre('deleteMany', async function (next) {
         const deletedBooking = await Booking.find(this._conditions).lean()
 
         for(const b of deletedBooking){
+            // remove this booking from room booking list
             const room = await Room.findById(b.room);
-
             await room.booking.remove(b._id);
             await room.save();
+
+            // remove this booking from user booking list
+            const user = await User.findById(b.user);
+            await user.booking.remove(b._id);
+            await user.save();
         }
 
         return next();
