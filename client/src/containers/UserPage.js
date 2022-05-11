@@ -58,15 +58,14 @@ const UserPage = ({history}) => {
                         </li>                     
                         {currentUser.role === ROLE.student && (
                         <div className='card-body booked-list'>
-                            <h6>Booked room:</h6>
+                            <h6>Booking:</h6>
                             <ul className='list-group text-center'>
-                                {currentUser.bookedRooms && currentUser.bookedRooms.map(r=>(
-                                    <li className='list-group-item' key={r._id}>
-                                        <Link to={`/room/${r._id}`}>
-                                            <h6>
-                                                {dayjs(r.timestamp).format("DD-MMMM-YYYY HH:mm")}
-                                            </h6>
-                                        </Link>
+                                {currentUser.booking && currentUser.booking.map(b=>(
+                                    <li className='list-group-item' key={b._id}>
+                                        <p className='fw-bold'>Room {b.room.name}</p>         
+                                        <p className='fw-normal'>
+                                            {dayjs(b.timestamp).format("DD-MMMM-YYYY HH:mm")}
+                                        </p>
                                     </li>
                                 ))}
                             </ul>

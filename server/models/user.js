@@ -51,8 +51,8 @@ userSchema.pre("save", async function(next){
 
         if(this.isModified("role") || this.isModified("isSuspended")){
             this.booking = [];
-            
-             // Delete all the Booking with this user
+
+            // delete all the Booking with this user
             await mongoose.model('Booking').deleteMany({user: this.id});
 
             return next();   

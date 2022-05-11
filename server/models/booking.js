@@ -46,13 +46,12 @@ async function timeValidator(val){
 // hook to delete booking
 bookingSchema.pre("remove", async function(next){
     try{
-        // Remove booking from room booking list
+        // remove booking from room booking list
         const room = await Room.findById(this.room);
         await room.booking.remove(this.id);
         await room.save();
 
-        
-        // Remove booking from user booking list
+        // remove booking from user booking list
         const user = await User.findById(this.user);                    
         await user.booking.remove(this.id);
         await user.save();
@@ -62,6 +61,23 @@ bookingSchema.pre("remove", async function(next){
         return next(err);
     }
 })
+
+bookingSchema.pre('deleteMany', async function (next) {
+    try {
+        const deletedBooking = await Booking.find(this._conditions).lean()
+
+        for(const b of deletedBooking){
+            const room = await Room.findById(b.room);
+
+            await room.booking.remove(b._id);
+            await room.save();
+        }
+
+        return next();
+    } catch (error) {
+      return next(error);
+    }
+});
 
 
 const Booking = mongoose.model("Booking", bookingSchema);
