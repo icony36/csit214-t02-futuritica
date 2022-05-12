@@ -28,19 +28,21 @@ const BookingPage = () => {
         <div className='col-md-4'>
             <div className='card room-details' style={{width: '18rem'}}>
                 <div className='card-body'>
-                    {booking.room && !loading.isLoading ?
+                    {booking.room && booking.user && !loading.isLoading ?
                     <>
-                        <h4 className='fw-bold'>
-                            Room {booking.room.name}
+                        <h4 className='card-title'>
+                            Booking Details
                         </h4>                       
 
                         <h6 className='text-muted'>
-                            Booking date: {dayjs(booking.timestamp).format("DD-MMMM-YYYY")}
+                            booked by: {booking.user.username}
                         </h6>
 
-                        <h6 className='text-muted'>
-                            Booking time: {dayjs(booking.timestamp).format("HH:mm")}
-                        </h6>
+                        <ul className='list-group'>
+                            <li className='list-group-item'>Location: Room {booking.room.name}</li>
+                            <li className='list-group-item'>Date: {dayjs(booking.timestamp).format("DD-MMMM-YYYY")}</li>
+                            <li className='list-group-item'>Time: {dayjs(booking.timestamp).format("HH:mm")}</li>
+                        </ul>
 
                         <div className='card-body text-center'>
                             <Link to={`/booking/${id}/edit`}>

@@ -101,7 +101,7 @@ exports.getBooking = async function(req, res, next){
     const id = req.params.id;
     
     try{
-        const booking = await db.Booking.findById(id).populate('room');
+        const booking = await db.Booking.findById(id).populate('room').populate('user');
 
         console.log(id);
 

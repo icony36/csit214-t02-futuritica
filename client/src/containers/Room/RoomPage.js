@@ -82,7 +82,7 @@ const RoomPage = ({history}) => {
                             <li className='list-group-item'>Availability: {currentRoom.availability}</li>
                             <li className='list-group-item'>Capacity: {currentRoom.capacity} person</li>
                             <li className='list-group-item'>Price: {currentRoom.price ? `${currentRoom.price}` : "Free" }</li>                     
-                            {currentRoom.promotionCode? <li className='list-group-item'>Promotion Code: {currentRoom.promotionCode}</li> : null}
+                            {currentRoom.promotionCode ? <li className='list-group-item'>Promotion Code: {currentRoom.promotionCode}</li> : null}
                         </ul>
                         <div className='card-body text-center'>
                             {auth.user.role === ROLE.staff ? renderStaffBtn() : renderStudentBtn()}

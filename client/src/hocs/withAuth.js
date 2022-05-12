@@ -22,6 +22,11 @@ const withAuth = (Component, type, allowedRole) => {
                         props.history.push("/");
                     }
                     break;
+                case PAGE_TYPES.booking:
+                    if( props.booking && props.booking.user !== props.auth.user.id){
+                        props.history.push("/");
+                    }
+                    break;
                 default:
                     break;
             }
@@ -35,7 +40,8 @@ const withAuth = (Component, type, allowedRole) => {
 
 const mapStateToProps = state => (
     {
-        auth: state.auth
+        auth: state.auth,
+        booking: state.booking
     }
 )
 

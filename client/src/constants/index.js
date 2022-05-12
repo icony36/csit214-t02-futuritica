@@ -13,7 +13,8 @@ export const AVAL = Object.freeze({
 export const PAGE_TYPES = Object.freeze({
     auth: 'auth',
     private: 'private',
-    role: 'role'
+    role: 'role',
+    booking: 'booking'
 })
 
 export const BOOKING = Object.freeze({

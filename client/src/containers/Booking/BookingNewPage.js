@@ -91,11 +91,11 @@ const BookingNewPage = () => {
                             <Message messages={messages}/>
                             {currentRoom && !loading.isLoading ?
                             <>
-                                <h4 className='class-title '>Room {currentRoom.name}</h4>   
+                                <h4 className='fw-bold '>Room {currentRoom.name}</h4>   
             
                                 <h6 className='class-subtitle mb-2 text-muted'>Capacity: {currentRoom.capacity}</h6>                   
-                                <h6 className='class-subtitle mb-2 text-muted'>Price: {currentRoom.price}</h6>             
-                                <h6 className='class-subtitle mb-2 text-muted'>Promotion Code: {currentRoom.promotionCode}</h6>            
+                                <h6 className='class-subtitle mb-2 text-muted'>Price: {currentRoom.price ? `${currentRoom.price}` : "Free" }</h6>             
+                                {currentRoom.promotionCode ? <h6 className='class-subtitle mb-2 text-muted'>Promotion Code: {currentRoom.promotionCode}</h6> : null}           
                                                                                                     
                                 {isPaymentPage ? 
                                 <>
