@@ -42,12 +42,17 @@ exports.updateUser = async function(req, res, next){
         delete req.body.logInTime;
         delete req.body.logOutTime;
 
-        // update user details
+        // find user
         const user = await db.User.findById(id);
 
-        Object.assign(user, req.body);
+        // if the user role is changed
+        if(req.body.role !== user.role){
+            // delete all the Booking with this user
+            await db.Booking.deleteMany({user: id});
+        }
 
-        await user.save();
+        // update user
+        await db.User.findByIdAndUpdate(id, {...req.body});
 
         return res.status(200).json({message: `User successfully updated.`});
     } catch(err){
@@ -79,9 +84,11 @@ exports.suspendUser = async function(req, res, next){
     try{
         const id = req.params.id;
 
-        const user = await db.User.findById(id);
-        user.isSuspended = req.body.isSuspended;
-        await user.save();
+        // delete all the Booking with this user
+        await db.Booking.deleteMany({user: id});
+
+        // update user
+        await db.User.findByIdAndUpdate(id, {isSuspended: req.body.isSuspended});
 
         return res.status(200).json({message: `User ${id} ${req.body.isSuspended ? "suspended" : "unsuspended"}!`});
     } catch(err){
