@@ -56,6 +56,10 @@ exports.updateUser = async function(req, res, next){
 
         return res.status(200).json({message: `User successfully updated.`});
     } catch(err){
+         // if validation fail
+         if(err.code === 11000){
+            err.message = "Sorry, the email is used.";
+        }
 
         return next({
             status: 400,
@@ -69,6 +73,14 @@ exports.deleteUser = async function(req, res, next){
         const id = req.params.id;
 
         const user = await db.User.findById(id);
+
+        if(!user){
+            return next({
+                status: 422,
+                message: "User is not exist."
+            })
+        }
+
         await user.remove();
 
         return res.status(200).json({message: `User ${id} deleted!`});
@@ -90,7 +102,7 @@ exports.suspendUser = async function(req, res, next){
         // update user
         await db.User.findByIdAndUpdate(id, {isSuspended: req.body.isSuspended});
 
-        return res.status(200).json({message: `User ${id} ${req.body.isSuspended ? "suspended" : "unsuspended"}!`});
+        return res.status(200).json({message: `User ${req.body.isSuspended ? "suspended" : "unsuspended"}!`});
     } catch(err){
         return next({
             status: 400,

@@ -1,6 +1,7 @@
 import { apiCall, setTokenHeader} from '../../services/api';
 import { SET_CURRENT_USER } from '../actionTypes';
-import { addError, removeError } from './errorAction';
+import { addError, addSuccess, removeMessage } from './messageAction';
+import { addLoading, removeLoading } from './loadingAction';
 
 export function setCurrentUser(user){
     return {
@@ -15,30 +16,35 @@ export const setAuthToken = token => {
 
 export const signIn = (userData, history) => async dispatch => {
    try{
+        dispatch(removeMessage());    
+        dispatch(addLoading());    
         const res = await apiCall("post", `/api/auth/signin`, userData);
+        dispatch(removeLoading());
 
         localStorage.setItem("jwtToken", res.token);
         setAuthToken(res.token);
 
         dispatch(setCurrentUser(res.user));
-        dispatch(removeError());
+        dispatch(removeMessage());
 
         history.push('/');
    } catch(err){
+        dispatch(removeLoading());
         dispatch(addError(err));
    }
 }
 
-export const signUp = (userData, history) => async dispatch => {
+export const signUp = (userData) => async dispatch => {
     try{
-         const res = await apiCall("post", `/api/auth/signup`, userData);
-         
-         console.log(res);
-         dispatch(removeError());
- 
-         history.push('/');
+        dispatch(removeMessage());
+        dispatch(addLoading());
+        const res = await apiCall("post", `/api/auth/signup`, userData);
+        dispatch(removeLoading());
+
+        dispatch(addSuccess({message: "User successfully created."}));
     } catch(err){
-         dispatch(addError(err));
+        dispatch(removeLoading());
+        dispatch(addError(err));
     }
 }
 
@@ -48,7 +54,7 @@ export const logout = history => async (dispatch, getState) => {
     const id = auth.user.id;
 
     const res = await apiCall("put", `/api/auth/logout/${id}`);
-    
+
     console.log(res);
     localStorage.clear();
     setAuthToken(false);

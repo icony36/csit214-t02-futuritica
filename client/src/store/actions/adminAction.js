@@ -1,6 +1,7 @@
 import { apiCall } from '../../services/api';
 import { LOAD_USERS } from '../actionTypes';
-import { addError, removeError } from './errorAction';
+import { addError, addSuccess, removeMessage } from './messageAction';
+import { addLoading, removeLoading } from './loadingAction';
 
 export const loadUsers = users => ({
     type: LOAD_USERS,
@@ -9,11 +10,16 @@ export const loadUsers = users => ({
 
 export const fetchUsers = () => async dispatch => {
     try{
+        dispatch(removeMessage());
+        dispatch(addLoading());
         const res = await apiCall("get", `/api/admin/users`);
+        dispatch(removeLoading());
 
         dispatch(loadUsers(res));
-        dispatch(removeError());
+        dispatch(removeMessage());
    } catch(err){
+        dispatch(removeLoading())
+    
         if(err){
             dispatch(addError(err));
         }
@@ -23,37 +29,46 @@ export const fetchUsers = () => async dispatch => {
    }
 }
 
-export const updateUser = (users, id, history) => async dispatch => {
+export const updateUser = (users, id) => async dispatch => {
     try{
+        dispatch(removeMessage());
+        dispatch(addLoading());
         const res = await apiCall("put", `/api/admin/users/${id}`, users);
+        dispatch(removeLoading());
 
-        // window.location.reload();
-        history.push(`/user/${id}`);
-        console.log(res);
+        dispatch(addSuccess(res));
     } catch(err){
+        dispatch(removeLoading());
         dispatch(addError(err));
     }  
 }
 
 export const deleteUser = (id, history) => async dispatch => {
     try{
+        dispatch(removeMessage());
+        dispatch(addLoading());
         const res = await apiCall("delete", `/api/admin/users/${id}`);
+        dispatch(removeLoading());
 
-        // window.location.reload();
         history.push(`/`);
-        console.log(res);
+        dispatch(removeMessage());
     } catch(err){
+        dispatch(removeLoading());
         dispatch(addError(err));
     }  
 }
 
-export const suspendUser = (id, obj) => async dispatch => {
+export const suspendUser = (id, obj, history) => async dispatch => {
     try{    
+        dispatch(removeMessage());
+        dispatch(addLoading());
         const res = await apiCall("patch", `/api/admin/users/${id}`, obj);
+        dispatch(removeLoading());
 
-        window.location.reload();
-        console.log(res);
+        dispatch(addSuccess(res));
+        setTimeout(() => history.push('/'), 1000);
     } catch(err){
+        dispatch(removeLoading());
         dispatch(addError(err));
     }  
 }

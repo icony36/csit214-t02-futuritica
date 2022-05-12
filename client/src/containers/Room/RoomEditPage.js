@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { fetchRooms, updateRoom, removeError, deleteRoom } from '../store/actions';
+import { fetchRooms, updateRoom, removeMessage, deleteRoom } from '../../store/actions';
+import Message from '../../components/Message';
+import Loading from '../../components/Loading';
 
 const RoomEditPage = ({history}) => {
-    const errors = useSelector(state=>state.errors);
+    const messages = useSelector(state=>state.messages);
     const rooms = useSelector(state => state.rooms);
+    const loading = useSelector(state => state.loading);
+
     const { id } = useParams();
 
     const dispatch = useDispatch();
@@ -45,16 +49,16 @@ const RoomEditPage = ({history}) => {
     const handleSubmit = e => {
         e.preventDefault();
     
-        dispatch(updateRoom(roomEditData, id, history));
+        dispatch(updateRoom(roomEditData, id));
     }
 
     const handleDelete = () => {
         dispatch(deleteRoom(id, history));
     }
 
-    if(errors.message){
+    if(messages.message){
         const unlisten = history.listen(() => {
-            dispatch(removeError());
+            dispatch(removeMessage());
             unlisten()
         })
     }
@@ -62,15 +66,12 @@ const RoomEditPage = ({history}) => {
     return(
         <div className='row justify-content-md-center'>
             <div className='col-md-4'> 
-                {errors.message && 
-                           <div className='alert alert-danger card-body'>
-                               {errors.message}
-                           </div>
-                }                              
-                {currentRoom && 
-                    <div className='card'>
-                        <form onSubmit={handleSubmit}>                            
-                            <div className='card-body'>  
+                <div className='card'>
+                    <form onSubmit={handleSubmit}>                            
+                        <div className='card-body'>  
+                            {currentRoom && !loading.isLoading ?
+                            <>
+                                <Message messages={messages}/>                       
                                 <label htmlFor='name'>Room Name:</label>
                                     <input 
                                         className='form-control' 
@@ -121,15 +122,18 @@ const RoomEditPage = ({history}) => {
                                     value={roomEditData.promotionCode} 
                                     type="text" 
                                 />  
-                            </div>
+                            
 
-                            <div className='card-body text-center'>
-                                <button type="submit" className='btn btn-primary'>Update</button>
-                                <button type='button' onClick={handleDelete} className='btn btn-danger btn-block' style={{ marginLeft: "0.5rem"}}>Delete Room</button>
-                            </div>
-                        </form>
-                    </div>  
-                }
+                                <div className='card-body text-center'>
+                                    <button type="submit" className='btn btn-primary'>Update</button>
+                                    <button type='button' onClick={handleDelete} className='btn btn-danger btn-block' style={{ marginLeft: "0.5rem"}}>Delete Room</button>
+                                </div>
+                            </> :
+                            <Loading small/>
+                            }
+                        </div>
+                    </form>
+                </div>  
             </div>
         </div>
     )

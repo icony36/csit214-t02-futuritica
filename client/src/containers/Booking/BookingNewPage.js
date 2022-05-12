@@ -2,15 +2,20 @@ import React, {useState, useEffect} from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
 
-import { fetchRooms, removeError, bookRoom } from '../store/actions';
-import { BOOKING } from "../constants";
-import BookingNewForm from "../components/BookingNewform";
-import PaymentPage from "../components/PaymentPage";
+import { fetchRooms, removeMessage, createBooking } from '../../store/actions';
+import { BOOKING } from "../../constants";
+import BookingNewForm from "../../components/Booking/BookingNewform";
+import PaymentPage from "../../components/Booking/PaymentPage";
+import Message from "../../components/Message";
+import Loading from "../../components/Loading";
 
 const BookingNewPage = () => {
-    const errors = useSelector(state=>state.errors);
+    const messages = useSelector(state=>state.messages);
     const rooms = useSelector(state => state.rooms);
+    const loading = useSelector(state => state.loading);
+
     const { id } = useParams();
+
     const history = useHistory();
 
     const dispatch = useDispatch();
@@ -60,19 +65,19 @@ const BookingNewPage = () => {
     const handleBook = e => {
         e.preventDefault();
 
-        dispatch(removeError());
+        dispatch(removeMessage());
             
-        dispatch(bookRoom(bookData, BOOKING.book, id, history));
+        dispatch(createBooking(bookData, BOOKING.book, id, history));
     }
 
     const handlePaymentPage = () => {
-        dispatch(removeError());
+        dispatch(removeMessage());
         setIsPaymentPage(true);
     }
 
-    if(errors.message){
+    if(messages.message){
         const unlisten = history.listen(() => {
-            dispatch(removeError());
+            dispatch(removeMessage());
             unlisten();
         })
     }
@@ -80,43 +85,41 @@ const BookingNewPage = () => {
     return(
         <div className='row justify-content-md-center'>
             <div className='col-md-4'> 
-                {currentRoom && 
-                    <div className='card'>
-                        <form onSubmit={handleBook}>                            
-                            <div className='card-body'>  
-                                {errors.message && 
-                                        <div className='alert alert-danger card-body'>
-                                            {errors.message}
-                                        </div>
-                                }
-
-                                 <h4 className='class-title '>{currentRoom.name}</h4>   
-          
+                <div className='card'>
+                    <form onSubmit={handleBook}>                            
+                        <div className='card-body'>  
+                            <Message messages={messages}/>
+                            {currentRoom && !loading.isLoading ?
+                            <>
+                                <h4 className='class-title '>{currentRoom.name}</h4>   
+            
                                 <h6 className='class-subtitle mb-2 text-muted'>Capacity: {currentRoom.capacity}</h6>                   
                                 <h6 className='class-subtitle mb-2 text-muted'>Price: {currentRoom.price}</h6>             
                                 <h6 className='class-subtitle mb-2 text-muted'>Promotion Code: {currentRoom.promotionCode}</h6>            
-                                                
-                                                    
-                                {isPaymentPage ? (
+                                                                                                    
+                                {isPaymentPage ? 
                                 <>
                                     <PaymentPage />
                                     <div className='card-body text-center'>
                                         <button onClick={()=>setIsPaymentPage(false)} className='btn btn-primary' style={{marginRight: '1rem'}}>Back To Booking</button>
                                         <button type="submit" className='btn btn-success'>Confirm Payment</button>
                                     </div>
-                                </>
-                                ) : ( 
+                                </> : 
                                 <>
-                                    <BookingNewForm handlePaymentPage={handlePaymentPage} currentRoom={currentRoom} bookData={bookData} handleDate={handleDate} handleHours={handleHours}/>
-                                   
+                                    <BookingNewForm 
+                                    handlePaymentPage={handlePaymentPage} 
+                                    currentRoom={currentRoom} 
+                                    bookData={bookData} 
+                                    handleDate={handleDate} 
+                                    handleHours={handleHours}/>                                    
                                 </>   
-                                )}
-
-
-                            </div>                    
-                        </form>
-                    </div>  
-                }
+                                }
+                            </> :
+                            <Loading small/>
+                            }
+                        </div>                    
+                    </form>
+                </div>  
             </div>
         </div>
     )

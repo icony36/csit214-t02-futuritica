@@ -2,15 +2,18 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
-import { fetchRooms, bookRoom, launchRoom } from '../store/actions';
-import Message from '../components/Message';
-import { ROLE, AVAL, BOOKING } from '../constants';
+import { fetchRooms, launchRoom, removeMessage } from '../../store/actions';
+import Message from '../../components/Message';
+import { ROLE, AVAL } from '../../constants';
+import Loading from '../../components/Loading';
 
 
-const RoomPage = () => {
+const RoomPage = ({history}) => {
     const rooms = useSelector(state => state.rooms);
-    const errors = useSelector(state => state.errors);
+    const messages = useSelector(state => state.messages);
     const auth = useSelector(state => state.auth);
+    const loading = useSelector(state => state.loading);
+
     const { id } = useParams();
 
     const dispatch = useDispatch();
@@ -56,14 +59,21 @@ const RoomPage = () => {
             </>
         )
     }
+
+    if(messages.message){
+        const unlisten = history.listen(() => {
+            dispatch(removeMessage());
+            unlisten();
+        })
+    }
      
     return(
     <div className='row justify-content-md-center'>
         <div className='col-md-4'>
             <div className='card room-details' style={{width: '18rem'}}>
                 <div className='card-body'>
-                    <Message type='error' errors={errors}/> 
-                    {currentRoom && 
+                    <Message messages={messages}/> 
+                    {currentRoom && !loading.isLoading ?
                     <>
                         <h4 className='fw-bold'>
                             Room {currentRoom.name}
@@ -90,7 +100,8 @@ const RoomPage = () => {
                                 ))}
                             </ul>
                         </div>
-                    </>
+                    </> :
+                    <Loading small/>
                     }
                 </div>
             </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { AVAL } from '../constants';
+import { AVAL } from '../../constants';
 
 const RoomItem = props => {
     const { id, availability, name} = props;

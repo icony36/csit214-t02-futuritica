@@ -144,9 +144,17 @@ exports.deleteBooking = async function(req, res, next){
         const id = req.params.id;
 
         const booking = await db.Booking.findById(id);
+
+        if(!booking){
+            return next({
+                status: 422,
+                message: "Booking is not exist."
+            })
+        }
+
         await booking.remove();
 
-        return res.status(200).json({message: `Booking ${id} cancel!`});
+        return res.status(200).json({message: `Booking cancel!`});
     } catch(err){
         return next({
             status: 400,

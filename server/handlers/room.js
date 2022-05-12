@@ -108,7 +108,6 @@ exports.launchRoom = async function(req, res, next){
         // update room
         await db.Room.findByIdAndUpdate(id, {availability, booking:[]});
 
-
         // delete all the Booking with this user
         await db.Booking.deleteMany({room: id});
        
@@ -131,9 +130,17 @@ exports.deleteRoom = async function(req, res, next){
         const id = req.params.id;
 
         const room = await db.Room.findById(id);
+
+        if(!room){
+            return next({
+                status: 422,
+                message: "Room is not exist."
+            })
+        }
+
         await room.remove();
 
-        return res.status(200).json({message: `Room ${id} deleted!`});
+        return res.status(200).json({message: `Room deleted!`});
     } catch(err){
         return next({
             status: 400,

@@ -1,6 +1,7 @@
 import { apiCall } from '../../services/api';
 import { LOAD_ROOMS } from '../actionTypes';
-import { addError, removeError } from './errorAction';
+import { addError, addSuccess, removeMessage } from './messageAction';
+import { addLoading, removeLoading } from './loadingAction';
 
 export const loadRooms = rooms => ({
     type: LOAD_ROOMS,
@@ -9,11 +10,16 @@ export const loadRooms = rooms => ({
 
 export const fetchRooms = () => async dispatch => {
     try{
+        dispatch(removeMessage());
+        dispatch(addLoading());
         const res = await apiCall("get", `/api/common/rooms`);
+        dispatch(removeLoading());
 
         dispatch(loadRooms(res));
-        dispatch(removeError());
+        dispatch(removeMessage());
    } catch(err){
+        dispatch(removeLoading());
+
         if(err){
             dispatch(addError(err));
         }
@@ -23,61 +29,60 @@ export const fetchRooms = () => async dispatch => {
    }
 }
 
-export const postNewRoom = (room, history) => async (dispatch) => {
+export const postNewRoom = (room) => async (dispatch) => {
     try{
+        dispatch(removeMessage());
+        dispatch(addLoading());
         const res = await apiCall("post", `/api/staff/room/`, room);
+        dispatch(removeLoading());
 
-        console.log(res);
-        dispatch(removeError());
-
-        history.push('/');
+        dispatch(addSuccess({message: "Room successfully created."}));
     } catch(err){
+        dispatch(removeLoading());
         dispatch(addError(err));
     } 
 }
 
-export const updateRoom = (room, id, history) => async dispatch => {
+export const updateRoom = (room, id) => async dispatch => {
     try{
+        dispatch(removeMessage());
+        dispatch(addLoading());
         const res = await apiCall("put", `/api/staff/room/${id}`, room);
+        dispatch(removeLoading());
 
-        // window.location.reload();
-        history.push(`/room/${id}`);
-        console.log(res);
+        dispatch(addSuccess(res));
     } catch(err){
-        dispatch(addError(err));
-    }  
-}
-
-export const bookRoom = (bookData, bookType, id, history) => async dispatch => {
-    try{
-        const res = await apiCall("patch", `/api/student/booking/${id}`, {bookData, bookType});
-
-        console.log(res);
-        history.push(`/profile`);
-    } catch(err){
+        dispatch(removeLoading());
         dispatch(addError(err));
     }  
 }
 
 export const launchRoom = (availability, id) => async dispatch => {
     try{
+        dispatch(removeMessage());
+        dispatch(addLoading());
         const res = await apiCall("put", `/api/staff/room/${id}/launch`, {availability});
+        dispatch(removeLoading());
 
-        window.location.reload();
-        console.log(res);
+        dispatch(addSuccess(res));
+        setTimeout(() => window.location.reload(), 1000);
     } catch(err){
+        dispatch(removeLoading());
         dispatch(addError(err));
     }  
 }
 
 export const deleteRoom = (id, history) => async dispatch => {
     try{
+        dispatch(removeMessage());
+        dispatch(addLoading());
         const res = await apiCall("delete", `/api/staff/room/${id}`);
+        dispatch(removeLoading());
 
-        // window.location.reload();
-        history.push(`/`);
-        console.log(res);
+        dispatch(addSuccess(res));
+        setTimeout(() => history.push('/'), 1000);
     } catch(err){
+        dispatch(removeLoading());
         dispatch(addError(err));
     }  
 }

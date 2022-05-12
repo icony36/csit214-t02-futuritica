@@ -3,17 +3,17 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import Navbar from './Navbar';
 import HomePage from "./HomePage";
-import SignInPage from "./SignInPage";
-import SignUpPage from "./SignUpPage";
-import ProfilePage from './ProfilePage';
-import RoomNewPage from './RoomNewPage';
-import RoomEditPage from './RoomEditPage';
-import RoomPage from './RoomPage';
-import UserPage from './UserPage';
-import UserEditPage from './UserEditPage';
-import BookingNewPage from './BookingNewPage';
-import BookingPage from './BookingPage';
-import BookingEditPage from './BookingEditPage';
+import SignInPage from "./Auth/SignInPage";
+import SignUpPage from "./Auth/SignUpPage";
+import ProfilePage from './Profile/ProfilePage';
+import RoomNewPage from './Room/RoomNewPage';
+import RoomEditPage from './Room/RoomEditPage';
+import RoomPage from './Room/RoomPage';
+import UserPage from './User/UserPage';
+import UserEditPage from './User/UserEditPage';
+import BookingNewPage from './Booking/BookingNewPage';
+import BookingPage from './Booking/BookingPage';
+import BookingEditPage from './Booking/BookingEditPage';
 import withAuth from "../hocs/withAuth";
 import { ROLE, PAGE_TYPES } from "../constants";
 

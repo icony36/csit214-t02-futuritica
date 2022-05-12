@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { signIn, removeError } from '../store/actions';
-import Message from '../components/Message';
+import { signIn, removeMessage } from '../../store/actions';
+import Message from '../../components/Message';
+import Loading from '../../components/Loading';
 
-const SignInPage = ({isSignUp, history}) => {
-    const errors = useSelector(state => state.errors);
-    
+const SignInPage = ({history}) => {
+    const messages = useSelector(state => state.messages);
+    const loading = useSelector(state => state.loading);
+
     const dispatch = useDispatch();
     
     const [formData, setFormData] = useState({
@@ -27,9 +29,9 @@ const SignInPage = ({isSignUp, history}) => {
         dispatch(signIn(formData, history));
     }
 
-    if(errors.message){
+    if(messages.message){
         const unlisten = history.listen(() => {
-            dispatch(removeError());
+            dispatch(removeMessage());
             unlisten()
         })
     }
@@ -43,7 +45,7 @@ const SignInPage = ({isSignUp, history}) => {
                         </div>
                         <form onSubmit={handleSubmit}>
                             <div className='card-body'>
-                                <Message type='error' errors={errors}/>
+                                <Message messages={messages}/>
             
                                 <label htmlFor='email'>Email:</label>
                                 <input 
@@ -70,6 +72,7 @@ const SignInPage = ({isSignUp, history}) => {
                     </div>
                 </div>
             </div>
+            <Loading loading={loading}/>
         </div>
     )
 }

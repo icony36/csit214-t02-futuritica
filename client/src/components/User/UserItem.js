@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
-import { ROLE } from '../constants';
+import { ROLE } from '../../constants';
 
 const UserItem = props => {
     const { id, username, role, lastLogin} = props;

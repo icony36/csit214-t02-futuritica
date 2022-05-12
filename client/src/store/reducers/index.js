@@ -1,16 +1,18 @@
 import { combineReducers } from "redux";
 import adminReducer from "./adminReducer";
 import authReducer from "./authReducer";
-import errorReducer from "./errorReducer";
+import messageReducer from "./messageReducer";
 import roomReducer from "./roomReducer";
 import profileReducer from "./profileReducer";
 import bookingReducer from "./bookingReducer";
+import loadingReducer from "./loadingReducer";
 
 export default combineReducers({
    auth: authReducer,
-   errors: errorReducer ,
+   messages: messageReducer ,
    rooms: roomReducer,
    profile: profileReducer,
    users: adminReducer,
-   booking: bookingReducer
+   booking: bookingReducer,
+   loading: loadingReducer
 });

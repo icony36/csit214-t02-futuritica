@@ -2,8 +2,8 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import {Link} from 'react-router-dom';
 import { ROLE } from "../constants";
-import RoomList from './RoomList';
-import UserList from './UserList';
+import RoomList from './Room/RoomList';
+import UserList from './User/UserList';
 
 const HomePage = () => {
     const auth  = useSelector(state => state.auth);
@@ -12,7 +12,9 @@ const HomePage = () => {
         if(auth.user.role === ROLE.admin)
         {
             return(
+            <div className='contianer'>
                 <UserList />
+            </div>
             )
         }
         

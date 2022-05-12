@@ -20,3 +20,10 @@ export const BOOKING = Object.freeze({
     book: 'book',
     unbook: 'unbook',
 })
+
+export const MESSAGE_TYPES = Object.freeze({
+    error: 'error',
+    success: 'success',
+    warning: 'warning',
+    info: 'info'
+})

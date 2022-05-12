@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchUsers } from '../store/actions';
-import UserItem from '../components/UserItem';
-import { ROLE } from '../constants';
+import { fetchUsers } from '../../store/actions';
+import UserItem from '../../components/User/UserItem';
+import { ROLE } from '../../constants';
+import Loading from '../../components/Loading';
 
 const UserList = () => {
-
     const users = useSelector(state => state.users);
+    const loading = useSelector(state => state.loading);
     
     const dispatch = useDispatch();
     
@@ -89,6 +90,7 @@ const UserList = () => {
                     {suspendedList}
                 </ul>
             </div>
+            <Loading loading={loading}/>
         </div>
     )
 

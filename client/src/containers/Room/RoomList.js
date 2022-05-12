@@ -1,14 +1,15 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchRooms } from '../store/actions';
-import RoomItem from '../components/RoomItem';
-import RoomAvalNum from '../components/RoomAvalNum';
-import { ROLE, AVAL } from '../constants';
+import { fetchRooms } from '../../store/actions';
+import RoomItem from '../../components/Room/RoomItem';
+import RoomAvalNum from '../../components/Room/RoomAvalNum';
+import { ROLE, AVAL } from '../../constants';
+import Loading from '../../components/Loading';
 
 const RoomList = () => {
-
     const rooms = useSelector(state => state.rooms);
     const auth = useSelector(state =>  state.auth);
+    const loading = useSelector(state =>  state.loading);
     
     const dispatch = useDispatch();
     
@@ -60,6 +61,7 @@ const RoomList = () => {
                 </div>
                )}
             </div>
+            <Loading loading={loading}/>
         </div>
     )
 

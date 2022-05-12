@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { fetchUsers, updateUser, removeError } from '../store/actions';
+import { fetchUsers, updateUser, removeMessage } from '../../store/actions';
+import Message from '../../components/Message';
+import Loading from '../../components/Loading';
 
 const UserEditPage = ({history}) => {
-    const errors = useSelector(state=>state.errors);
+    const messages = useSelector(state=>state.messages);
     const users = useSelector(state => state.users);
+    const loading = useSelector(state => state.loading);
     const { id } = useParams();
 
     const dispatch = useDispatch();
@@ -44,12 +47,12 @@ const UserEditPage = ({history}) => {
     const handleSubmit = e => {
         e.preventDefault();
     
-        dispatch(updateUser(userEditData, id, history));
+        dispatch(updateUser(userEditData, id));
     }
 
-    if(errors.message){
+    if(messages.message){
         const unlisten = history.listen(() => {
-            dispatch(removeError());
+            dispatch(removeMessage());
             unlisten()
         })
     }
@@ -57,15 +60,12 @@ const UserEditPage = ({history}) => {
     return(
         <div className='row justify-content-md-center'>
             <div className='col-md-4'> 
-                {errors.message && 
-                           <div className='alert alert-danger card-body'>
-                               {errors.message}
-                           </div>
-                }                              
-                {currentUser && 
-                    <div className='card'>
-                        <form onSubmit={handleSubmit}>                            
-                            <div className='card-body'>  
+                <div className='card'>
+                    <form onSubmit={handleSubmit}>                            
+                        <div className='card-body'>  
+                            {currentUser && !loading.isLoading ?
+                            <>
+                                <Message messages={messages}/>                           
                                 <label htmlFor='username'>Username:</label>
                                 <input 
                                     className='form-control' 
@@ -102,13 +102,15 @@ const UserEditPage = ({history}) => {
                                         Staff
                                     </option>
                                 </select>
-                            </div>
-                            <div className='card-body text-center'>
-                                <button type="submit" className='btn btn-primary'>Update</button>
-                            </div>
-                        </form>
-                    </div>  
-                }
+                                <div className='card-body text-center'>
+                                    <button type="submit" className='btn btn-primary'>Update</button>
+                                </div>
+                            </> :
+                            <Loading small/>
+                            }
+                        </div>
+                    </form>
+                </div>  
             </div>
         </div>
     )

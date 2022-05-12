@@ -1,5 +1,5 @@
 import React from 'react';
-import Message from './Message';
+import Message from '../Message';
 
 const SignInForm = props => {
     const { email, password, errors, handleChange } = props;
