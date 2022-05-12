@@ -29,7 +29,7 @@ export const fetchBooking = (id) => async dispatch => {
     }
 } 
 
-export const createBooking = (bookData, bookType, id, history) => async dispatch => {
+export const createBooking = (bookData, bookType, id) => async dispatch => {
     try{
         dispatch(removeMessage());
         dispatch(addLoading());
@@ -43,11 +43,15 @@ export const createBooking = (bookData, bookType, id, history) => async dispatch
     }  
 }
 
-export const updateBooking = (booking, id, history) => async dispatch => {
+export const updateBooking = (newBooking, id) => async (dispatch, getState) => {
+    let { booking } = getState();
+
+    const ownerId = booking.user;
+    
     try{
         dispatch(removeMessage());
         dispatch(addLoading());
-        const res = await apiCall("put", `/api/student/booking/${id}`, booking);
+        const res = await apiCall("put", `/api/student/booking/${id}/${ownerId}`, newBooking);
         dispatch(removeLoading());
 
         dispatch(addSuccess(res));        

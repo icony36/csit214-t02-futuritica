@@ -62,7 +62,7 @@ const BookingEditPage = ({history}) => {
     const handleSubmit = e => {
         e.preventDefault();
     
-        dispatch(updateBooking(bookingEditData, id, history));
+        dispatch(updateBooking(bookingEditData, id));
     }
 
     const handleDelete = () => {

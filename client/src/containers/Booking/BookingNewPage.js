@@ -67,7 +67,7 @@ const BookingNewPage = () => {
 
         dispatch(removeMessage());
             
-        dispatch(createBooking(bookData, BOOKING.book, id, history));
+        dispatch(createBooking(bookData, BOOKING.book, id));
     }
 
     const handlePaymentPage = () => {
