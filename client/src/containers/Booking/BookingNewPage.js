@@ -91,7 +91,7 @@ const BookingNewPage = () => {
                             <Message messages={messages}/>
                             {currentRoom && !loading.isLoading ?
                             <>
-                                <h4 className='class-title '>{currentRoom.name}</h4>   
+                                <h4 className='class-title '>Room {currentRoom.name}</h4>   
             
                                 <h6 className='class-subtitle mb-2 text-muted'>Capacity: {currentRoom.capacity}</h6>                   
                                 <h6 className='class-subtitle mb-2 text-muted'>Price: {currentRoom.price}</h6>             

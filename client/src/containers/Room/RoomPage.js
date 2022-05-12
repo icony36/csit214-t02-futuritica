@@ -29,11 +29,11 @@ const RoomPage = ({history}) => {
      },[]);
 
     const handleLaunch = () => {
-        dispatch(launchRoom(AVAL.public, id));
+        dispatch(launchRoom(AVAL.public, id, history));
     }
 
     const handleTakedown = () => {
-        dispatch(launchRoom(AVAL.private, id));
+        dispatch(launchRoom(AVAL.private, id, history));
     }
 
     const renderStudentBtn = () => {

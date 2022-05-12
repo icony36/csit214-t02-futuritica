@@ -57,7 +57,7 @@ export const updateRoom = (room, id) => async dispatch => {
     }  
 }
 
-export const launchRoom = (availability, id) => async dispatch => {
+export const launchRoom = (availability, id, history) => async dispatch => {
     try{
         dispatch(removeMessage());
         dispatch(addLoading());
@@ -65,7 +65,7 @@ export const launchRoom = (availability, id) => async dispatch => {
         dispatch(removeLoading());
 
         dispatch(addSuccess(res));
-        setTimeout(() => window.location.reload(), 1000);
+        setTimeout(() => history.push('/'), 1000);
     } catch(err){
         dispatch(removeLoading());
         dispatch(addError(err));
