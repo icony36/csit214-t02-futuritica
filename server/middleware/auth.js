@@ -82,8 +82,6 @@ exports.ensureCorrectRole = function(allowedRole){
 
 exports.ensureCorrectBooking = function(req, res, next){
     try{
-        
-
         const authHeader = req.headers.authorization || req.headers.Authorization;
         const token = authHeader.split(" ")[1];
         jwt.verify(
