@@ -2,7 +2,7 @@ const db = require("../models");
 const jwt = require("jsonwebtoken");
 
 exports.signup = async function(req, res, next){
-    if (!req.body.email || !req.body.password || !req.body.username || !req.body.role) {
+    if (!req.body.password || !req.body.username || !req.body.role) {
 
         return next({
             status: 422,
@@ -13,15 +13,14 @@ exports.signup = async function(req, res, next){
     try{
         // create user
         const user = await db.User.create(req.body);
-        const {id, email, username, role} = user;
+        const {id, username, role} = user;
 
         // create token
-        const token = jwt.sign({id, email, role}, process.env.SECRET_KEY);
+        const token = jwt.sign({id, username, role}, process.env.SECRET_KEY);
 
         return res.status(200).json({
             user:{
                  id,
-                 email,
                  username,
                  role
             },
@@ -30,7 +29,7 @@ exports.signup = async function(req, res, next){
     } catch(err){
         // if validation fail
         if(err.code === 11000){
-            err.message = "Sorry, the email is used.";
+            err.message = "Sorry, the username is used.";
         }
 
         return next({
@@ -42,19 +41,19 @@ exports.signup = async function(req, res, next){
 
 exports.signin = async function(req, res, next){
     
-    if (!req.body.email || !req.body.password) {
+    if (!req.body.username || !req.body.password) {
         return next({
             status: 422,
-            message: "Please provide email and password."
+            message: "Please provide username and password."
         })
     }
 
     try{
         // find user
         const user = await db.User.findOne({
-            email: req.body.email
+            username: req.body.username
         });
-        const {id, email, username, role, isSuspended} = user;
+        const {id, username, role, isSuspended} = user;
 
         const isMatch = await user.comparePassword(req.body.password);
         if(isMatch){
@@ -66,7 +65,7 @@ exports.signin = async function(req, res, next){
             }
 
             // create token
-            const token = jwt.sign({id, email, role}, process.env.SECRET_KEY);
+            const token = jwt.sign({id, username, role}, process.env.SECRET_KEY);
 
             // update login time
             user.logInTime = new Date();
@@ -75,7 +74,6 @@ exports.signin = async function(req, res, next){
             return res.status(200).json({
                user:{
                     id,
-                    email,
                     username,
                     role,
                     logInTime: user.logInTime

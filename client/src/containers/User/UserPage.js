@@ -64,7 +64,6 @@ const UserPage = ({history}) => {
                         )} 
 
                         <ul className='list-group list-group-flush'>
-                            <li className='list-group-item'>Email: {currentUser.email}</li>
                             <li className='list-group-item'>
                                 Last login: {currentUser.logInTime ? dayjs(currentUser.logInTime).format("DD MMMM YYYY HH:mm") : "Not logged in yet"}
                             </li>

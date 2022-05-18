@@ -12,7 +12,6 @@ const SignUpPage = ({history}) => {
     const dispatch = useDispatch();
     
     const [formData, setFormData] = useState({
-        email: "",
         username: "",
         password: "",
         role: ""
@@ -54,25 +53,6 @@ const SignUpPage = ({history}) => {
                                 <>
                                     <Message messages={messages}/>
                                     
-                                    <label htmlFor='email'>Email (required):</label>
-                                    <input 
-                                        className='form-control' 
-                                        id='email' 
-                                        name='email' 
-                                        onChange={handleChange} 
-                                        value={formData.email} 
-                                        type="text" 
-                                    />
-                                    
-                                    <label htmlFor='password'>Password (required):</label>
-                                    <input 
-                                        className='form-control' 
-                                        id='password' 
-                                        name='password' 
-                                        onChange={handleChange} 
-                                        type="password" 
-                                    />
-
                                     <label htmlFor='username'>Username (required):</label>
                                     <input 
                                         className='form-control' 
@@ -81,6 +61,15 @@ const SignUpPage = ({history}) => {
                                         onChange={handleChange} 
                                         value={formData.username} 
                                         type="text" 
+                                    />
+
+                                    <label htmlFor='password'>Password (required):</label>
+                                    <input 
+                                        className='form-control' 
+                                        id='password' 
+                                        name='password' 
+                                        onChange={handleChange} 
+                                        type="password" 
                                     />
 
                                     <label htmlFor='role'>Role (required):</label>

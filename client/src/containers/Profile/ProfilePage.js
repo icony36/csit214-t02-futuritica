@@ -34,8 +34,7 @@ const Profile = ({history}) => {
                         {!loading.isLoading ?
                         <>
                             <div className='card-body'>
-                                <h6 className='class-subtitle mb-2text-muted'>Username: {profile.username}</h6>                 
-                                <h6 className='class-subtitle mb-2 text-muted'>Email: {profile.email}</h6>                   
+                                <h6 className='class-subtitle mb-2text-muted'>Username: {profile.username}</h6>                                   
                                 <h6 className='class-subtitle mb-2 text-muted'>Role: {profile.role}</h6>  
                             </div>
                            

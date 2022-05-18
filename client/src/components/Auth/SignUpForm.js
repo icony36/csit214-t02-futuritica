@@ -8,24 +8,7 @@ const SignUpForm = props => {
     return(
         <>
             <Message type='error' errors={errors}/>
-            
-            <label htmlFor='email'>Email (required):</label>
-            <input 
-                className='form-control' 
-                id='email' 
-                name='email' 
-                onChange={handleChange} 
-                value={email} 
-                type="text" 
-            />
-            <label htmlFor='password'>Password (required):</label>
-            <input 
-                className='form-control' 
-                id='password' 
-                name='password' 
-                onChange={handleChange} 
-                type="password" 
-            />
+
             <label htmlFor='username'>Username (required):</label>
             <input 
                 className='form-control' 
@@ -35,6 +18,16 @@ const SignUpForm = props => {
                 value={username} 
                 type="text" 
             />
+
+            <label htmlFor='password'>Password (required):</label>
+            <input 
+                className='form-control' 
+                id='password' 
+                name='password' 
+                onChange={handleChange} 
+                type="password" 
+            />
+        
             <label htmlFor='role'>Role (required):</label>
             <select 
                 className='form-control' 

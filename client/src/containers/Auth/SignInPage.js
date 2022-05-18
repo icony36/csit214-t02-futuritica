@@ -11,7 +11,7 @@ const SignInPage = ({history}) => {
     const dispatch = useDispatch();
     
     const [formData, setFormData] = useState({
-        email: "",
+        username: "",
         password: ""
     })
 
@@ -47,13 +47,13 @@ const SignInPage = ({history}) => {
                             <div className='card-body'>
                                 <Message messages={messages}/>
             
-                                <label htmlFor='email'>Email:</label>
+                                <label htmlFor='username'>Username:</label>
                                 <input 
                                     className='form-control' 
-                                    id='email' 
-                                    name='email' 
+                                    id='username' 
+                                    name='username' 
                                     onChange={handleChange} 
-                                    value={formData.email} 
+                                    value={formData.username} 
                                     type="text" 
                                 />
                                 <label htmlFor='password'>Password:</label>
