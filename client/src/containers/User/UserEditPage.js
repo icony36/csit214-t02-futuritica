@@ -6,7 +6,7 @@ import Message from '../../components/Message';
 import Loading from '../../components/Loading';
 
 const UserEditPage = ({history}) => {
-    const messages = useSelector(state=>state.messages);
+    const messages = useSelector(state => state.messages);
     const users = useSelector(state => state.users);
     const loading = useSelector(state => state.loading);
     const { id } = useParams();
@@ -62,6 +62,7 @@ const UserEditPage = ({history}) => {
                 <div className='card'>
                     <form onSubmit={handleSubmit}>                            
                         <div className='card-body'>  
+                            <Message messages={messages}/>   
                             {currentUser && !loading.isLoading ?
                             <>                      
                                 <label htmlFor='role'>Role:</label>
