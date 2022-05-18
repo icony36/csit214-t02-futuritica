@@ -16,7 +16,6 @@ const UserEditPage = ({history}) => {
     const currentUser = users.filter(r => r._id === id)[0];
 
     const initState = {
-        email: currentUser ? currentUser.email : "",
         role: currentUser ? currentUser.role : "",
         username: currentUser ? currentUser.username : "",
     }
@@ -64,28 +63,7 @@ const UserEditPage = ({history}) => {
                     <form onSubmit={handleSubmit}>                            
                         <div className='card-body'>  
                             {currentUser && !loading.isLoading ?
-                            <>
-                                <Message messages={messages}/>                           
-                                <label htmlFor='username'>Username:</label>
-                                <input 
-                                    className='form-control' 
-                                    id='username' 
-                                    name='username' 
-                                    onChange={handleChange} 
-                                    value={userEditData.username} 
-                                    type="text" 
-                                />
-
-                                <label htmlFor='email'>Email:</label>
-                                <input 
-                                    className='form-control' 
-                                    id='email' 
-                                    name='email' 
-                                    onChange={handleChange} 
-                                    value={userEditData.email} 
-                                    type="text" 
-                                />    
-                                
+                            <>                      
                                 <label htmlFor='role'>Role:</label>
                                 <select 
                                     className='form-control' 

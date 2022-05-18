@@ -46,8 +46,10 @@ export const createBooking = (bookData, bookType, id) => async dispatch => {
 export const updateBooking = (newBooking, id) => async (dispatch, getState) => {
     let { booking } = getState();
 
-    const ownerId = booking.user;
-    
+    const ownerId = booking.user._id;
+
+    console.log(ownerId);
+
     try{
         dispatch(removeMessage());
         dispatch(addLoading());
